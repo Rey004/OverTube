@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OverTube Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <!-- Header -->
+  <div class="header" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <img src="../over.png" alt="OverTube Logo" class="logo-img">
+      <div class="brand">
+        <h1>OverTube</h1>
+        <p>Take YouTube Beyond Its Limits.</p>
+      </div>
+    </div>
+    <label class="switch" title="Enable/Disable OverTube Features">
+      <input type="checkbox" id="master-toggle" checked>
+      <span class="slider-toggle"></span>
+    </label>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <div class="nav-tabs">
+    <div class="nav-indicator" id="nav-indicator"></div>
+    <button class="tab-btn active" data-tab="tab-player">Player</button>
+    <button class="tab-btn" data-tab="tab-audio">Audio</button>
+    <button class="tab-btn" data-tab="tab-focus">Focus</button>
+  </div>
+
+  <!-- Tab Contents Wrapper (allows fading everything out when extension is disabled) -->
+  <div id="settings-wrapper">
+
+    <!-- PLAYER TAB -->
+    <div id="tab-player" class="tab-content active">
+      <!-- Custom Progress Bar Card (Collapsible) -->
+      <div class="card collapsible-card" id="progress-bar-card">
+        <div class="card-title collapsible-header" id="progress-card-header" style="cursor: pointer;">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+          </svg>
+          <span>Custom Progress Bar</span>
+          <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+          </svg>
+        </div>
+        
+        <div class="collapsible-body" id="progress-card-body">
+          <p class="card-desc">Personalize your YouTube progress bar with custom styling and gradients.</p>
+          
+          <!-- Live Preview -->
+          <div class="preview-container">
+            <div class="preview-bar-track" id="preview-track">
+              <div class="preview-bar-fill" id="preview-fill"></div>
+              <div class="preview-bar-scrubber" id="preview-scrubber"></div>
+            </div>
+          </div>
+
+          <!-- Presets Grid -->
+          <div class="settings-list">
+            <span class="setting-hint">Preset Collection</span>
+            <div class="presets-grid">
+              <button class="preset-btn" data-style="default" title="Default Red">
+                <div class="preset-icon default-icon"></div>
+              </button>
+              <button class="preset-btn" data-style="neon" title="Neon Cyan">
+                <div class="preset-icon neon-icon"></div>
+              </button>
+              <button class="preset-btn" data-style="minimal" title="Minimalist">
+                <div class="preset-icon minimal-icon"></div>
+              </button>
+              <button class="preset-btn" data-style="gradient" title="Sunset Gradient">
+                <div class="preset-icon gradient-icon"></div>
+              </button>
+              <button class="preset-btn" data-style="gaming" title="Cyber Gaming">
+                <div class="preset-icon gaming-icon"></div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Enhanced Playback Speed Card -->
+    <div class="card">
+      <div class="card-title">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 12a9 9 0 1 1 18 0" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 12l3.5-3.5" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1.5M18.36 5.64l-1.06 1.06M5.64 5.64l1.06 1.06" />
+        </svg>
+        <span>Enhanced Playback Speed</span>
+      </div>
+      <p class="card-desc">Unlock playback speed settings up to 3.0x (extends YouTube controls).</p>
+      <div class="slider-container">
+        <div class="slider-header">
+          <span class="setting-hint">Speed Multiplier</span>
+          <span class="slider-val" id="speed-val">1.0x</span>
+        </div>
+        <input type="range" id="playback-speed" min="0.25" max="3" step="0.05" value="1">
+      </div>
+    </div>
+
+    <!-- Sticky Mini Player Card -->
+    <div class="card">
+      <div class="card-title">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9 3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9V4.5M15 9h4.5M15 9l5.25-5.25M15 15v4.5M15 15h4.5M15 15l5.25 5.25" />
+        </svg>
+        <span>Sticky Mini Player</span>
+      </div>
+      <div class="switch-control">
+        <div class="setting-label">
+          <span class="setting-name">Enable Mini Player</span>
+          <span class="setting-hint">Floats video on scroll down</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="enable-mini-player">
+          <span class="slider-toggle"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUDIO TAB -->
+  <div id="tab-audio" class="tab-content">
+    <div class="card">
+      <div class="card-title">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
+        </svg>
+        <span>Audio Volume Booster</span>
+      </div>
+      <p class="card-desc">Boost audio volume up to 500% using dynamic soft limiter to prevent clipping and distortion.</p>
+      <div class="slider-container">
+        <div class="slider-header">
+          <span class="setting-hint">Boost Level</span>
+          <span class="slider-val" id="audio-val">100%</span>
+        </div>
+        <input type="range" id="audio-boost" min="0" max="500" step="10" value="100">
+      </div>
+    </div>
+  </div>
+
+  <!-- FOCUS & SHORTS TAB -->
+  <div id="tab-focus" class="tab-content">
+    <!-- Hide Shorts Card -->
+    <div class="card">
+      <div class="card-title">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
+        </svg>
+        <span>Hide YouTube Shorts</span>
+      </div>
+      <div class="switch-control">
+        <div class="setting-label">
+          <span class="setting-name">Block Shorts Entirely</span>
+          <span class="setting-hint">Hides Shorts shelves and feeds</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="hide-shorts">
+          <span class="slider-toggle"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Focus Mode Card -->
+    <div class="card">
+      <div class="card-title">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+        </svg>
+        <span>Focus Mode</span>
+      </div>
+      <p class="card-desc">Toggle off YouTube's most distracting areas to stay focused.</p>
+      
+      <div class="settings-list">
+        <!-- Sidebar -->
+        <div class="setting-item">
+          <div class="setting-label">
+            <span class="setting-name">Hide Sidebar / Next Videos</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="focus-hide-sidebar">
+            <span class="slider-toggle"></span>
+          </label>
+        </div>
+
+        <!-- Comments -->
+        <div class="setting-item">
+          <div class="setting-label">
+            <span class="setting-name">Hide Comments</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="focus-hide-comments">
+            <span class="slider-toggle"></span>
+          </label>
+        </div>
+
+        <!-- Home Page Feed -->
+        <div class="setting-item">
+          <div class="setting-label">
+            <span class="setting-name">Hide Home Recommendations</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="focus-hide-home">
+            <span class="slider-toggle"></span>
+          </label>
+        </div>
+
+        <!-- End Screens -->
+        <div class="setting-item">
+          <div class="setting-label">
+            <span class="setting-name">Hide End Screen Overlays</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="focus-hide-endscreen">
+            <span class="slider-toggle"></span>
+          </label>
+        </div>
+      </div>
+  </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span>OverTube v1.0</span>
+    <button class="btn-reset" id="reset-settings">Reset All</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

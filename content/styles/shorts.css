@@ -1,0 +1,12 @@
+/* Hide YouTube Shorts CSS */
+.ot-hide-shorts-active ytd-rich-shelf-renderer[is-shorts],
+.ot-hide-shorts-active ytd-reel-shelf-renderer,
+.ot-hide-shorts-active ytd-guide-entry-renderer:has(a[href="/shorts"]),
+.ot-hide-shorts-active ytd-mini-guide-entry-renderer:has(a[href="/shorts"]),
+.ot-hide-shorts-active ytd-guide-entry-renderer:has(a[title="Shorts"]),
+.ot-hide-shorts-active ytd-mini-guide-entry-renderer[aria-label="Shorts"],
+.ot-hide-shorts-active ytd-rich-section-renderer:has(ytd-rich-shelf-renderer[is-shorts]),
+.ot-hide-shorts-active ytd-shorts,
+.ot-hide-shorts-active a[href^="/shorts"] {
+  display: none !important;
+}

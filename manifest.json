@@ -1,0 +1,47 @@
+{
+  "manifest_version": 3,
+  "name": "OverTube - Customise your YouTube",
+  "version": "1.0",
+  "description": "Take YouTube Beyond Its Limits",
+  "permissions": [
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "over.png",
+      "32": "over.png",
+      "48": "over.png",
+      "128": "over.png"
+    }
+  },
+  "icons": {
+    "16": "over.png",
+    "32": "over.png",
+    "48": "over.png",
+    "128": "over.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "css": [
+        "content/styles/progress.css",
+        "content/styles/focus.css",
+        "content/styles/shorts.css",
+        "content/styles/miniplayer.css"
+      ],
+      "js": [
+        "content/modules/progressBar.js",
+        "content/modules/playbackSpeed.js",
+        "content/modules/audioBooster.js",
+        "content/modules/focusMode.js",
+        "content/modules/hideShorts.js",
+        "content/modules/miniPlayer.js",
+        "content/content.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

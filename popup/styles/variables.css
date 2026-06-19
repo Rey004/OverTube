@@ -1,0 +1,53 @@
+:root {
+  --bg-dark: #0a0505;
+  --bg-card: rgba(30, 18, 18, 0.7);
+  --bg-card-hover: rgba(45, 24, 24, 0.9);
+  --bg-input: #241414;
+  --text-primary: #f5f0f0;
+  --text-secondary: #c7b2b2;
+  --accent-color: #e5281e;
+  --accent-glow: rgba(254, 51, 40, 0.4);
+  --accent-neon: #ff443a;
+  --accent-neon-glow: rgba(255, 68, 58, 0.4);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-active: rgba(254, 51, 40, 0.6);
+  --font-sans: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 360px;
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  padding: 16px;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(254, 51, 40, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(254, 80, 70, 0.1) 0%, transparent 40%);
+  background-attachment: fixed;
+}
+
+/* Custom Theme Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(254, 51, 40, 0.15);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(254, 51, 40, 0.4);
+}

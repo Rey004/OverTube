@@ -1,0 +1,91 @@
+/* Sticky Mini Player Styles */
+.ot-mini-player-wrapper {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 320px;
+  height: 180px;
+  z-index: 999999;
+  background: #000;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(124, 77, 255, 0.4);
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.ot-mini-player-wrapper:hover {
+  border-color: #7c4dff;
+}
+
+/* Custom Mini Player Header/Drag Handle */
+.ot-mini-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 32px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px;
+  box-sizing: border-box;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  z-index: 10;
+  cursor: move;
+}
+
+.ot-mini-player-wrapper:hover .ot-mini-header {
+  opacity: 1;
+}
+
+.ot-mini-title {
+  color: #fff;
+  font-size: 11px;
+  font-family: sans-serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 180px;
+}
+
+.ot-mini-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.ot-mini-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: #fff;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.ot-mini-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.ot-mini-btn-close:hover {
+  background: #ff3366 !important;
+}
+
+/* CSS applied to YouTube player when mini-player is active */
+.ot-player-docked {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1 !important;
+}

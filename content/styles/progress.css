@@ -1,0 +1,60 @@
+/* Preset: Neon Cyan Glow */
+.ot-progress-neon .ytp-play-progress {
+  background: #00f0ff !important;
+  box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff !important;
+}
+.ot-progress-neon .ytp-scrubber-button {
+  background: #00f0ff !important;
+  box-shadow: 0 0 12px #00f0ff !important;
+  border: 1px solid #ffffff !important;
+}
+
+/* Preset: Minimal */
+.ot-progress-minimal .ytp-progress-bar-container {
+  height: 2px !important;
+}
+.ot-progress-minimal .ytp-progress-bar {
+  height: 2px !important;
+}
+.ot-progress-minimal .ytp-scrubber-button {
+  width: 8px !important;
+  height: 8px !important;
+  margin-top: -3px !important;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out !important;
+}
+.ot-progress-minimal .ytp-progress-bar-container:hover .ytp-scrubber-button {
+  opacity: 1 !important;
+}
+
+/* Preset: Gradient */
+.ot-progress-gradient .ytp-play-progress {
+  background: linear-gradient(90deg, #7c4dff, #ff3366, #ff9933) !important;
+}
+.ot-progress-gradient .ytp-scrubber-button {
+  background: #ff3366 !important;
+  border: 2px solid #ffffff !important;
+}
+
+/* Preset: Gaming */
+.ot-progress-gaming .ytp-play-progress {
+  background: linear-gradient(90deg, #ff007f, #7f00ff, #00f0ff, #ff007f) !important;
+  background-size: 400% 400% !important;
+  animation: ot-rgb-pulse 6s linear infinite !important;
+}
+.ot-progress-gaming .ytp-scrubber-button {
+  background: #7f00ff !important;
+  box-shadow: 0 0 10px #7f00ff !important;
+  animation: ot-rgb-glow 6s linear infinite !important;
+}
+
+@keyframes ot-rgb-pulse {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes ot-rgb-glow {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}

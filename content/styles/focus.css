@@ -1,0 +1,42 @@
+/* Focus Mode Styling */
+
+/* Hide Sidebar / Watch Next */
+.ot-focus-hide-sidebar #secondary,
+.ot-focus-hide-sidebar ytd-watch-next-secondary-results-renderer {
+  display: none !important;
+}
+/* If secondary is hidden, expand primary video to center or take up more width */
+.ot-focus-hide-sidebar ytd-watch-flexy:not([fullscreen]) #primary {
+  max-width: 100% !important;
+  min-width: 100% !important;
+  margin-right: 0 !important;
+}
+
+/* Hide Comments */
+.ot-focus-hide-comments #comments {
+  display: none !important;
+}
+
+/* Hide Home Recommendations Feed */
+.ot-focus-hide-home ytd-browse[page-subtype="home"] #contents,
+.ot-focus-hide-home ytd-browse[page-subtype="home"] #primary {
+  display: none !important;
+}
+.ot-focus-hide-home ytd-browse[page-subtype="home"]::after {
+  content: "OverTube Focus Mode Active. Search to watch a video.";
+  display: block;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #9494b8;
+  margin-top: 100px;
+  width: 100%;
+}
+
+/* Hide End Screen Cards */
+.ot-focus-hide-endscreen .ytp-ce-element,
+.ot-focus-hide-endscreen .videowall-endscreen,
+.ot-focus-hide-endscreen .ytp-ce-cover-image,
+.ot-focus-hide-endscreen .ytp-ce-expanding-image {
+  display: none !important;
+}
