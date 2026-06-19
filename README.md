@@ -1,4 +1,4 @@
-# <img src="over.png" width="32" height="32" align="center" style="border-radius: 8px;"> OverTube
+# <img src="over.png" width="60" align="center" style="border-radius: 8px;"> OverTube
 
 > **Take YouTube Beyond Its Limits.** A modern, performance-oriented Chrome extension that enhances and personalizes your YouTube viewing experience with modular settings and a dark-red premium dashboard.
 
