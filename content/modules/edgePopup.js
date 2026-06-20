@@ -167,6 +167,12 @@ window.OverTubeEdgePopup = {
                   <button class="ot-preset-btn" data-style="spiderman" data-tooltip="Spider-Man">
                     <div class="ot-preset-icon spiderman-icon"></div>
                   </button>
+                  <button class="ot-preset-btn" data-style="venom" data-tooltip="Venom">
+                    <div class="ot-preset-icon venom-icon"></div>
+                  </button>
+                  <button class="ot-preset-btn" data-style="captain" data-tooltip="Captain America">
+                    <div class="ot-preset-icon captain-icon"></div>
+                  </button>
                 </div>
               </div>
             </div>

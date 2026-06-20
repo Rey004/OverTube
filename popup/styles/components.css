@@ -177,11 +177,37 @@
   transform: translate(-50%, -50%) !important;
 }
 
+.preview-bar-track.preview-venom .preview-bar-fill {
+  background: linear-gradient(90deg, #050505, #1c0e35, #4c1d95, #a855f7) !important;
+}
+.preview-bar-track.preview-venom .preview-bar-scrubber {
+  background: url('../../public/gif/venom.gif') no-repeat center !important;
+  background-size: contain !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 0 !important;
+  border: none !important;
+  transform: translate(-50%, -80%) scaleX(-1) !important;
+}
+
+.preview-bar-track.preview-captain .preview-bar-fill {
+  background: linear-gradient(180deg, #002d62 0%, #002d62 33%, #ffffff 33%, #ffffff 66%, #d52b1e 66%, #d52b1e 100%) !important;
+}
+.preview-bar-track.preview-captain .preview-bar-scrubber {
+  background: url('../../public/gif/captain_america.gif') no-repeat center !important;
+  background-size: contain !important;
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 0 !important;
+  border: none !important;
+  transform: translate(-50%, -50%) !important;
+}
+
 /* Presets Grid */
 .presets-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  max-width: 200px;
+  grid-template-columns: repeat(6, 1fr);
+  max-width: 280px;
   gap: 8px;
   margin-top: 6px;
 }
@@ -225,6 +251,10 @@
   transform: scaleX(-1) scale(1.05);
 }
 
+.preset-btn:hover .preset-icon.venom-icon {
+  transform: scaleX(-1) scale(1.05);
+}
+
 /* Preset Icons Inner styles */
 .default-icon {
   background: #fe3328;
@@ -243,6 +273,13 @@
 }
 .spiderman-icon {
   background: url('../../public/gif/spiderman.gif') no-repeat center / contain, linear-gradient(135deg, #5a0a0a, #e74c3c);
+}
+.venom-icon {
+  background: url('../../public/gif/venom.gif') no-repeat center / contain, linear-gradient(135deg, #050505, #1c0e35, #4c1d95, #a855f7);
+  transform: scaleX(-1);
+}
+.captain-icon {
+  background: url('../../public/gif/captain_america.gif') no-repeat center / contain, linear-gradient(180deg, #002d62 0%, #002d62 33%, #ffffff 33%, #ffffff 66%, #d52b1e 66%, #d52b1e 100%);
 }
 
 /* CSS Tooltip for Presets */
@@ -277,23 +314,27 @@
 
 /* Center second and third button's tooltips */
 .preset-btn[data-style="merry"]::after,
-.preset-btn[data-style="batman"]::after {
+.preset-btn[data-style="batman"]::after,
+.preset-btn[data-style="spiderman"]::after,
+.preset-btn[data-style="venom"]::after {
   left: 50%;
   transform: translateX(-50%) translateY(-2px);
 }
 .preset-btn[data-style="merry"]:hover::after,
-.preset-btn[data-style="batman"]:hover::after {
+.preset-btn[data-style="batman"]:hover::after,
+.preset-btn[data-style="spiderman"]:hover::after,
+.preset-btn[data-style="venom"]:hover::after {
   opacity: 1;
   transform: translateX(-50%) translateY(-6px);
 }
 
-/* Align fourth button's tooltip to the right of the button */
-.preset-btn[data-style="spiderman"]::after {
+/* Align sixth button's tooltip to the right of the button */
+.preset-btn[data-style="captain"]::after {
   right: 0;
   left: auto;
   transform: translateY(-2px);
 }
-.preset-btn[data-style="spiderman"]:hover::after {
+.preset-btn[data-style="captain"]:hover::after {
   opacity: 1;
   transform: translateY(-6px);
 }

@@ -53,7 +53,9 @@
         "over.png",
         "public/gif/onepiece_goingmerry.gif",
         "public/gif/batman.gif",
-        "public/gif/spiderman.gif"
+        "public/gif/spiderman.gif",
+        "public/gif/venom.gif",
+        "public/gif/captain_america.gif"
       ],
       "matches": [
         "https://www.youtube.com/*"

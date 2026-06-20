@@ -54,3 +54,41 @@
 .ot-progress-spiderman .ytp-scrubber-container {
   z-index: 1000 !important;
 }
+
+/* Preset: Venom */
+.ot-progress-venom .ytp-play-progress {
+  background: linear-gradient(90deg, #050505, #1c0e35, #4c1d95, #a855f7) !important; /* Dark symbiote gradient */
+}
+.ot-progress-venom .ytp-scrubber-button {
+  background: url('chrome-extension://__MSG_@@extension_id__/public/gif/venom.gif') no-repeat center !important;
+  background-size: contain !important;
+  width: 48px !important;
+  height: 48px !important;
+  border: none !important;
+  margin-top: -32px !important; /* Centered vertically for 48px height */
+  margin-left: -24px !important;
+  transform: scaleX(-1) !important; /* Flip horizontally */
+  box-shadow: none !important;
+}
+.ot-progress-venom .ytp-scrubber-container {
+  z-index: 1000 !important;
+}
+
+/* Preset: Captain America */
+.ot-progress-captain .ytp-play-progress {
+  background: linear-gradient(180deg, #002d62 0%, #002d62 33%, #ffffff 33%, #ffffff 66%, #d52b1e 66%, #d52b1e 100%) !important; /* Blue, White, and Red horizontal strips */
+}
+.ot-progress-captain .ytp-scrubber-button {
+  background: url('chrome-extension://__MSG_@@extension_id__/public/gif/captain_america.gif') no-repeat center !important;
+  background-size: contain !important;
+  width: 34px !important;
+  height: 34px !important;
+  border: none !important;
+  margin-top: -15px !important; /* Centered vertically for 34px height */
+  margin-left: -17px !important;
+  transform: none !important; /* Not flipped */
+  box-shadow: none !important;
+}
+.ot-progress-captain .ytp-scrubber-container {
+  z-index: 1000 !important;
+}
