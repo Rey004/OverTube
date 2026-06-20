@@ -397,8 +397,8 @@
 #overtube-edge-popup .ot-switch {
   position: relative;
   display: inline-block;
-  width: 40px;
-  height: 22px;
+  width: 32px;
+  height: 18px;
 }
 
 #overtube-edge-popup .ot-switch input {
@@ -414,32 +414,32 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--ot-bg-input);
+  background-color: rgba(255, 255, 255, 0.08);
   transition: .3s;
-  border-radius: 22px;
-  border: 1px solid var(--ot-border-color);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 #overtube-edge-popup .ot-slider-toggle:before {
   position: absolute;
   content: "";
-  height: 14px;
-  width: 14px;
-  left: 3px;
-  bottom: 3px;
-  background-color: var(--ot-text-secondary);
+  height: 12px;
+  width: 12px;
+  left: 2px;
+  bottom: 2px;
+  background-color: rgba(255, 255, 255, 0.5);
   transition: .3s;
   border-radius: 50%;
 }
 
 #overtube-edge-popup .ot-switch input:checked + .ot-slider-toggle {
   background-color: var(--ot-accent-color);
-  border-color: var(--ot-border-active);
+  border-color: transparent;
 }
 
 #overtube-edge-popup .ot-switch input:checked + .ot-slider-toggle:before {
-  transform: translateX(18px);
-  background-color: var(--ot-text-primary);
+  transform: translateX(14px);
+  background-color: #ffffff;
 }
 
 /* Sliders */
@@ -465,8 +465,8 @@
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  height: 6px;
-  border-radius: 3px;
+  height: 3px;
+  border-radius: 1.5px;
   background: var(--ot-bg-input);
   outline: none;
   transition: background 0.3s ease;
@@ -475,13 +475,14 @@
 #overtube-edge-popup .ot-range-input::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 16px;
-  height: 16px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: var(--ot-text-primary);
-  border: 2px solid var(--ot-accent-color);
+  background: #ffffff;
+  border: none;
   cursor: pointer;
   transition: transform 0.1s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 #overtube-edge-popup .ot-range-input::-webkit-slider-thumb:hover {
@@ -627,23 +628,22 @@
 
 /* Live Preview inside Edge Popup */
 #overtube-edge-popup .ot-preview-container {
-  background: rgba(0, 0, 0, 0.4);
-  padding: 18px 16px;
-  border-radius: 8px;
-  border: 1px solid var(--ot-border-color);
-  margin: 6px 0;
+  background: transparent;
+  padding: 10px 4px;
+  border: none;
+  margin: 4px 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 50px;
+  min-height: auto;
 }
 
 #overtube-edge-popup .ot-preview-bar-track {
   position: relative;
   width: 100%;
-  height: 3px;
+  height: 2px;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 1.5px;
+  border-radius: 1px;
   transition: var(--ot-transition-smooth);
 }
 
@@ -653,7 +653,7 @@
   left: 0;
   height: 100%;
   width: 55%;
-  border-radius: 1.5px 0 0 1.5px;
+  border-radius: 1px 0 0 1px;
   background: var(--ot-accent-color);
   transition: var(--ot-transition-smooth);
 }
@@ -663,8 +663,8 @@
   top: 50%;
   left: 55%;
   transform: translate(-50%, -50%);
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: var(--ot-accent-color);
   transition: var(--ot-transition-smooth);
@@ -722,10 +722,11 @@
 }
 
 #overtube-edge-popup .ot-btn-reset {
-  background: rgba(254, 51, 40, 0.1);
-  border: 1px solid rgba(254, 51, 40, 0.3);
-  color: var(--ot-accent-neon);
-  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 3px 8px;
+  font-size: 10px;
   border-radius: 4px;
   cursor: pointer;
   font-family: var(--ot-font-sans);
@@ -734,9 +735,9 @@
 }
 
 #overtube-edge-popup .ot-btn-reset:hover {
-  background: var(--ot-accent-color);
-  color: var(--ot-text-primary);
-  border-color: var(--ot-accent-color);
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
 }
 
 /* Disabled styling overlay if Master toggle off */
