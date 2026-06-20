@@ -238,3 +238,61 @@
   background: linear-gradient(135deg, #ff007f, #7f00ff, #00f0ff, #ff007f);
 }
 
+/* Creative Highlighted Banner for Edge Popup Toggle */
+.edge-popup-banner {
+  background: linear-gradient(135deg, rgba(254, 51, 40, 0.15) 0%, rgba(124, 77, 255, 0.1) 100%);
+  border: 1px solid rgba(254, 51, 40, 0.3);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(254, 51, 40, 0.1), inset 0 0 10px rgba(254, 51, 40, 0.05);
+  transition: var(--transition-smooth);
+}
+
+.edge-popup-banner:hover {
+  border-color: rgba(254, 51, 40, 0.5);
+  box-shadow: 0 6px 20px rgba(254, 51, 40, 0.15), 0 0 8px rgba(124, 77, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.edge-banner-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.edge-banner-icon {
+  width: 22px;
+  height: 22px;
+  color: var(--accent-neon);
+  filter: drop-shadow(0 0 6px var(--accent-neon-glow));
+  animation: ot-pulse-icon 2s infinite ease-in-out;
+}
+
+.edge-banner-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.edge-banner-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.3px;
+}
+
+.edge-banner-subtitle {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+}
+
+@keyframes ot-pulse-icon {
+  0% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 10px var(--accent-neon-glow)); }
+  100% { transform: scale(1); opacity: 0.9; }
+}
+

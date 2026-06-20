@@ -5,6 +5,7 @@ const DEFAULT_SETTINGS = {
   progressBarStyle: 'default',
   playbackSpeed: 1.0,
   enableMiniPlayer: false,
+  showEdgePopup: true,
   audioBoost: 100,
   hideShorts: false,
   focusHideSidebar: false,
@@ -42,6 +43,9 @@ function applyAllSettings() {
     if (window.OverTubeMiniPlayer) {
       window.OverTubeMiniPlayer.apply(false);
     }
+    if (window.OverTubeEdgePopup) {
+      window.OverTubeEdgePopup.apply({ ...currentSettings, extensionEnabled: false });
+    }
     return;
   }
 
@@ -73,6 +77,11 @@ function applyAllSettings() {
   // 6. Mini Player
   if (window.OverTubeMiniPlayer) {
     window.OverTubeMiniPlayer.apply(currentSettings.enableMiniPlayer);
+  }
+
+  // 7. Edge Popup
+  if (window.OverTubeEdgePopup) {
+    window.OverTubeEdgePopup.apply(currentSettings);
   }
 }
 
@@ -111,6 +120,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
+// Sync currentSettings immediately on storage sync updates (e.g. from edge popup or dashboard)
+chrome.storage.onChanged.addListener((changes, areaName) => {
+  if (areaName === 'sync') {
+    const updated = {};
+    for (let [key, { newValue }] of Object.entries(changes)) {
+      updated[key] = newValue;
+    }
+    currentSettings = { ...currentSettings, ...updated };
+    applyAllSettings();
+  }
+});
+
 // Initialize on page load
 function init() {
   chrome.storage.sync.get(DEFAULT_SETTINGS, (settings) => {
@@ -122,6 +143,9 @@ function init() {
     }
     if (window.OverTubeMiniPlayer) {
       window.OverTubeMiniPlayer.init();
+    }
+    if (window.OverTubeEdgePopup) {
+      window.OverTubeEdgePopup.init();
     }
 
     applyAllSettings();

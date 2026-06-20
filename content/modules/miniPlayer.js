@@ -61,8 +61,8 @@ window.OverTubeMiniPlayer = {
     this.wrapper.appendChild(header);
     document.body.appendChild(this.wrapper);
 
-    // Setup dragging
-    this.setupDragging(header);
+    // Setup dragging & resizing
+    this.setupDraggingAndResizing();
   },
 
   handleScroll() {
@@ -148,54 +148,161 @@ window.OverTubeMiniPlayer = {
     if (this.wrapper) {
       this.wrapper.style.top = '';
       this.wrapper.style.left = '';
+      this.wrapper.style.width = '320px';
+      this.wrapper.style.height = '180px';
       this.wrapper.style.bottom = '24px';
       this.wrapper.style.right = '24px';
+      setTimeout(() => window.dispatchEvent(new Event('resize')), 50);
     }
   },
 
-  setupDragging(dragHandle) {
-    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  setupDraggingAndResizing() {
+    let activeDrag = false;
+    let activeResize = false;
+    let resizeDir = '';
     
-    dragHandle.onmousedown = (e) => {
-      e.preventDefault();
-      // Get the mouse cursor position at startup
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-      document.onmouseup = closeDragElement;
-      document.onmousemove = elementDrag;
-    };
+    let startX, startY;
+    let startWidth, startHeight;
+    let startLeft, startTop;
+    this.dragMoved = false;
 
-    const elementDrag = (e) => {
-      e.preventDefault();
-      // Calculate the new cursor position
-      pos1 = pos3 - e.clientX;
-      pos2 = pos4 - e.clientY;
-      pos3 = e.clientX;
-      pos4 = e.clientY;
+    // Create 4 corner resize handles
+    const dirs = ['tl', 'tr', 'bl', 'br'];
+    dirs.forEach(dir => {
+      const handle = document.createElement('div');
+      handle.className = `ot-resize-handle ot-resize-${dir}`;
+      handle.dataset.dir = dir;
+      this.wrapper.appendChild(handle);
+
+      handle.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        activeResize = true;
+        resizeDir = dir;
+        
+        startX = e.clientX;
+        startY = e.clientY;
+        startWidth = this.wrapper.offsetWidth;
+        startHeight = this.wrapper.offsetHeight;
+        
+        const rect = this.wrapper.getBoundingClientRect();
+        startLeft = rect.left;
+        startTop = rect.top;
+
+        document.addEventListener('pointermove', handlePointerMove);
+        document.addEventListener('pointerup', handlePointerUp);
+      });
+    });
+
+    // Capture-phase filtering: if dragged, prevent events from bubbling to player
+    const preventIfDragged = (e) => {
+      if (this.dragMoved) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+    this.wrapper.addEventListener('click', preventIfDragged, true);
+    this.wrapper.addEventListener('mouseup', preventIfDragged, true);
+    this.wrapper.addEventListener('pointerup', preventIfDragged, true);
+
+    // Draggable center (entire wrapper)
+    this.wrapper.addEventListener('pointerdown', (e) => {
+      // Don't drag if clicking mini buttons or resize handles
+      if (e.target.closest('.ot-mini-btn') || e.target.closest('.ot-resize-handle')) {
+        return;
+      }
+
+      activeDrag = true;
+      this.dragMoved = false;
+      startX = e.clientX;
+      startY = e.clientY;
       
-      // Set the element's new position
-      const newTop = this.wrapper.offsetTop - pos2;
-      const newLeft = this.wrapper.offsetLeft - pos1;
-
-      // Restrict drag boundaries to the viewport
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
       const rect = this.wrapper.getBoundingClientRect();
+      startLeft = rect.left;
+      startTop = rect.top;
 
-      if (newTop >= 0 && newTop + rect.height <= viewportHeight) {
-        this.wrapper.style.top = newTop + "px";
-        this.wrapper.style.bottom = "auto";
+      document.addEventListener('pointermove', handlePointerMove);
+      document.addEventListener('pointerup', handlePointerUp);
+    });
+
+    const handlePointerMove = (e) => {
+      if (activeResize) {
+        e.preventDefault();
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        let newWidth = startWidth;
+
+        if (resizeDir === 'br') {
+          newWidth = startWidth + dx;
+        } else if (resizeDir === 'bl') {
+          newWidth = startWidth - dx;
+        } else if (resizeDir === 'tr') {
+          newWidth = startWidth + dx;
+        } else if (resizeDir === 'tl') {
+          newWidth = startWidth - dx;
+        }
+
+        newWidth = Math.max(200, Math.min(800, newWidth));
+        const newHeight = Math.round(newWidth * 9 / 16);
+
+        this.wrapper.style.width = newWidth + 'px';
+        this.wrapper.style.height = newHeight + 'px';
+
+        if (resizeDir === 'tl') {
+          this.wrapper.style.left = (startLeft + (startWidth - newWidth)) + 'px';
+          this.wrapper.style.top = (startTop + (startHeight - newHeight)) + 'px';
+        } else if (resizeDir === 'bl') {
+          this.wrapper.style.left = (startLeft + (startWidth - newWidth)) + 'px';
+        } else if (resizeDir === 'tr') {
+          this.wrapper.style.top = (startTop + (startHeight - newHeight)) + 'px';
+        }
+        
+        this.wrapper.style.bottom = 'auto';
+        this.wrapper.style.right = 'auto';
+
+        window.dispatchEvent(new Event('resize'));
       }
-      if (newLeft >= 0 && newLeft + rect.width <= viewportWidth) {
-        this.wrapper.style.left = newLeft + "px";
-        this.wrapper.style.right = "auto";
+
+      if (activeDrag) {
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+          this.dragMoved = true;
+        }
+
+        if (this.dragMoved) {
+          e.preventDefault();
+          let newTop = startTop + dy;
+          let newLeft = startLeft + dx;
+
+          const viewportWidth = window.innerWidth;
+          const viewportHeight = window.innerHeight;
+          const rect = this.wrapper.getBoundingClientRect();
+
+          newTop = Math.max(0, Math.min(viewportHeight - rect.height, newTop));
+          newLeft = Math.max(0, Math.min(viewportWidth - rect.width, newLeft));
+
+          this.wrapper.style.top = newTop + "px";
+          this.wrapper.style.left = newLeft + "px";
+          this.wrapper.style.bottom = "auto";
+          this.wrapper.style.right = "auto";
+        }
       }
     };
 
-    function closeDragElement() {
-      // Stop moving when mouse button is released
-      document.onmouseup = null;
-      document.onmousemove = null;
-    }
+    const handlePointerUp = (e) => {
+      if (activeDrag) {
+        activeDrag = false;
+      }
+      activeResize = false;
+      document.removeEventListener('pointermove', handlePointerMove);
+      document.removeEventListener('pointerup', handlePointerUp);
+      
+      // Delay resetting dragMoved slightly to let click/mouseup capture listeners intercept events
+      setTimeout(() => {
+        this.dragMoved = false;
+      }, 50);
+    };
   }
 };

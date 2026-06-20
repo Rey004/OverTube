@@ -1,0 +1,597 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
+
+/* Edge Popup Container */
+#overtube-edge-popup {
+  --ot-bg-dark: #0a0505;
+  --ot-bg-card: rgba(30, 18, 18, 0.95);
+  --ot-bg-card-hover: rgba(45, 24, 24, 0.98);
+  --ot-bg-input: #241414;
+  --ot-text-primary: #f5f0f0;
+  --ot-text-secondary: #c7b2b2;
+  --ot-accent-color: #e9362d;
+  --ot-accent-glow: rgba(254, 51, 40, 0.4);
+  --ot-accent-neon: #ff443a;
+  --ot-accent-neon-glow: rgba(255, 68, 58, 0.4);
+  --ot-border-color: rgba(255, 255, 255, 0.08);
+  --ot-border-active: rgba(254, 51, 40, 0.6);
+  --ot-font-sans: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --ot-transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 999999;
+  font-family: var(--ot-font-sans);
+  color: var(--ot-text-primary);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), height 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.1s ease, left 0.3s ease, right 0.3s ease;
+  user-select: none;
+  touch-action: none;
+}
+
+#overtube-edge-popup.left {
+  left: 0;
+  right: auto;
+}
+
+#overtube-edge-popup.right {
+  right: 0;
+  left: auto;
+}
+
+/* Collapsed state (Minimal pill docking to the edge) */
+#overtube-edge-popup.collapsed {
+  width: 40px;
+  height: 44px;
+  background-color: rgba(10, 5, 5, 0.55);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(254, 51, 40, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: grab;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: width 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), height 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#overtube-edge-popup.collapsed:active {
+  cursor: grabbing;
+}
+
+#overtube-edge-popup.collapsed.left {
+  left: 0;
+  right: auto;
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 22px;
+  border-bottom-right-radius: 22px;
+  transform: translateY(-50%);
+}
+
+#overtube-edge-popup.collapsed.right {
+  right: 0;
+  left: auto;
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 22px;
+  border-bottom-left-radius: 22px;
+  transform: translateY(-50%);
+}
+
+#overtube-edge-popup.collapsed:hover {
+  width: 48px;
+  background-color: rgba(20, 10, 10, 0.95);
+  border-color: rgba(254, 51, 40, 0.6);
+  box-shadow: 0 4px 16px rgba(254, 51, 40, 0.35);
+}
+
+#overtube-edge-popup.collapsed img {
+  width: 22px;
+  height: 22px;
+  opacity: 0.8;
+  object-fit: contain;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  pointer-events: none;
+}
+
+#overtube-edge-popup.collapsed:hover img {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+/* Expanded state */
+#overtube-edge-popup.expanded {
+  width: 350px;
+  max-height: 85vh;
+  background-color: var(--ot-bg-dark);
+  border: 1px solid var(--ot-border-color);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(254, 51, 40, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(254, 80, 70, 0.03) 0%, transparent 40%);
+  background-attachment: local;
+}
+
+#overtube-edge-popup.expanded.left {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#overtube-edge-popup.expanded.right {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* Scrollbar styling specifically for edge popup */
+#overtube-edge-popup.expanded::-webkit-scrollbar {
+  width: 4px;
+}
+#overtube-edge-popup.expanded::-webkit-scrollbar-track {
+  background: transparent;
+}
+#overtube-edge-popup.expanded::-webkit-scrollbar-thumb {
+  background: rgba(254, 51, 40, 0.2);
+  border-radius: 2px;
+}
+#overtube-edge-popup.expanded::-webkit-scrollbar-thumb:hover {
+  background: rgba(254, 51, 40, 0.5);
+}
+
+/* Header & brand styling inside popup */
+#overtube-edge-popup .ot-header {
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--ot-border-color);
+  background: rgba(18, 10, 10, 0.8);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  cursor: grab;
+}
+
+#overtube-edge-popup .ot-header:active {
+  cursor: grabbing;
+}
+
+#overtube-edge-popup .ot-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+#overtube-edge-popup .ot-logo-img {
+  width: 24px;
+  height: 24px;
+}
+
+#overtube-edge-popup .ot-brand-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ot-text-primary);
+  letter-spacing: 0.5px;
+}
+
+#overtube-edge-popup .ot-collapse-btn {
+  background: none;
+  border: none;
+  color: var(--ot-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 4px;
+  transition: var(--ot-transition-smooth);
+}
+
+#overtube-edge-popup .ot-collapse-btn:hover {
+  color: var(--ot-accent-neon);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+#overtube-edge-popup .ot-collapse-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Navigation Tabs */
+#overtube-edge-popup .ot-tabs {
+  display: flex;
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid var(--ot-border-color);
+  margin: 8px 12px;
+}
+
+#overtube-edge-popup .ot-nav-indicator {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  background: var(--ot-accent-color);
+  border-radius: 6px;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 1;
+}
+
+#overtube-edge-popup .ot-tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--ot-text-secondary);
+  font-family: var(--ot-font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 0;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: var(--ot-transition-smooth);
+  z-index: 2;
+  position: relative;
+}
+
+#overtube-edge-popup .ot-tab-btn.active {
+  color: var(--ot-text-primary);
+}
+
+/* Content cards */
+#overtube-edge-popup .ot-content-wrapper {
+  padding: 0 12px 12px 12px;
+}
+
+#overtube-edge-popup .ot-tab-content {
+  display: none;
+}
+
+#overtube-edge-popup .ot-tab-content.active {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#overtube-edge-popup .ot-card {
+  background: var(--ot-bg-card);
+  border: 1px solid var(--ot-border-color);
+  border-radius: 12px;
+  padding: 12px;
+  transition: var(--ot-transition-smooth);
+}
+
+#overtube-edge-popup .ot-card:hover {
+  background: var(--ot-bg-card-hover);
+  border-color: rgba(254, 51, 40, 0.2);
+}
+
+#overtube-edge-popup .ot-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--ot-text-primary);
+}
+
+#overtube-edge-popup .ot-card-title svg {
+  width: 18px;
+  height: 18px;
+  color: var(--ot-accent-neon);
+}
+
+#overtube-edge-popup .ot-card-desc {
+  font-size: 11px;
+  color: var(--ot-text-secondary);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+/* Switches & Controls */
+#overtube-edge-popup .ot-switch-control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#overtube-edge-popup .ot-setting-label {
+  display: flex;
+  flex-direction: column;
+}
+
+#overtube-edge-popup .ot-setting-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ot-text-primary);
+}
+
+#overtube-edge-popup .ot-setting-hint {
+  font-size: 11px;
+  color: var(--ot-text-secondary);
+}
+
+/* Switch styling */
+#overtube-edge-popup .ot-switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+}
+
+#overtube-edge-popup .ot-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+#overtube-edge-popup .ot-slider-toggle {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--ot-bg-input);
+  transition: .3s;
+  border-radius: 22px;
+  border: 1px solid var(--ot-border-color);
+}
+
+#overtube-edge-popup .ot-slider-toggle:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: var(--ot-text-secondary);
+  transition: .3s;
+  border-radius: 50%;
+}
+
+#overtube-edge-popup .ot-switch input:checked + .ot-slider-toggle {
+  background-color: var(--ot-accent-color);
+  border-color: var(--ot-border-active);
+}
+
+#overtube-edge-popup .ot-switch input:checked + .ot-slider-toggle:before {
+  transform: translateX(18px);
+  background-color: var(--ot-text-primary);
+}
+
+/* Sliders */
+#overtube-edge-popup .ot-slider-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#overtube-edge-popup .ot-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#overtube-edge-popup .ot-slider-val {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ot-accent-neon);
+}
+
+#overtube-edge-popup .ot-range-input {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--ot-bg-input);
+  outline: none;
+  transition: background 0.3s ease;
+}
+
+#overtube-edge-popup .ot-range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ot-text-primary);
+  border: 2px solid var(--ot-accent-color);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+#overtube-edge-popup .ot-range-input::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Focus mode checklist */
+#overtube-edge-popup .ot-settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 8px;
+}
+
+#overtube-edge-popup .ot-setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Presets grid */
+#overtube-edge-popup .ot-presets-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-top: 6px;
+}
+
+#overtube-edge-popup .ot-preset-btn {
+  background: var(--ot-bg-input);
+  border: 1px solid var(--ot-border-color);
+  border-radius: 8px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--ot-transition-smooth);
+}
+
+#overtube-edge-popup .ot-preset-btn:hover {
+  border-color: rgba(254, 51, 40, 0.4);
+}
+
+#overtube-edge-popup .ot-preset-btn.active {
+  border-color: var(--ot-accent-color);
+  background: rgba(254, 51, 40, 0.1);
+}
+
+#overtube-edge-popup .ot-preset-icon {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+#overtube-edge-popup .ot-preset-icon.default-icon { background: #ff0000; }
+#overtube-edge-popup .ot-preset-icon.neon-icon { background: #00ffff; }
+#overtube-edge-popup .ot-preset-icon.minimal-icon { background: #ffffff; }
+#overtube-edge-popup .ot-preset-icon.gradient-icon { background: linear-gradient(135deg, #ff007f 0%, #ff7f00 100%); }
+#overtube-edge-popup .ot-preset-icon.gaming-icon { background: linear-gradient(135deg, #00ff00 0%, #0000ff 100%); }
+
+/* Live Preview inside Edge Popup */
+#overtube-edge-popup .ot-preview-container {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+#overtube-edge-popup .ot-preview-bar-track {
+  position: relative;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+#overtube-edge-popup .ot-preview-bar-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 40%;
+  background: var(--ot-accent-color);
+  border-radius: 2px;
+}
+
+#overtube-edge-popup .ot-preview-bar-scrubber {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background: var(--ot-accent-color);
+  border-radius: 50%;
+}
+
+#overtube-edge-popup .ot-preview-neon .ot-preview-bar-fill {
+  background: #00ffff;
+}
+#overtube-edge-popup .ot-preview-neon .ot-preview-bar-scrubber {
+  background: #00ffff;
+}
+
+#overtube-edge-popup .ot-preview-minimal .ot-preview-bar-fill {
+  background: #ffffff;
+}
+#overtube-edge-popup .ot-preview-minimal .ot-preview-bar-scrubber {
+  background: #ffffff;
+  width: 6px;
+  height: 6px;
+}
+
+#overtube-edge-popup .ot-preview-gradient .ot-preview-bar-fill {
+  background: linear-gradient(to right, #ff007f, #ff7f00);
+}
+#overtube-edge-popup .ot-preview-gradient .ot-preview-bar-scrubber {
+  background: #ff7f00;
+}
+
+#overtube-edge-popup .ot-preview-gaming .ot-preview-bar-fill {
+  background: linear-gradient(to right, #00ff00, #0000ff);
+}
+#overtube-edge-popup .ot-preview-gaming .ot-preview-bar-scrubber {
+  background: #0000ff;
+  border-radius: 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* Footer reset button */
+#overtube-edge-popup .ot-footer {
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--ot-border-color);
+  background: rgba(10, 5, 5, 0.9);
+  font-size: 11px;
+  color: var(--ot-text-secondary);
+}
+
+#overtube-edge-popup .ot-btn-reset {
+  background: rgba(254, 51, 40, 0.1);
+  border: 1px solid rgba(254, 51, 40, 0.3);
+  color: var(--ot-accent-neon);
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--ot-font-sans);
+  font-weight: 500;
+  transition: var(--ot-transition-smooth);
+}
+
+#overtube-edge-popup .ot-btn-reset:hover {
+  background: var(--ot-accent-color);
+  color: var(--ot-text-primary);
+  border-color: var(--ot-accent-color);
+}
+
+/* Disabled styling overlay if Master toggle off */
+#overtube-edge-popup .ot-disabled-overlay {
+  position: absolute;
+  top: 49px; /* under header */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 5, 5, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  color: var(--ot-text-secondary);
+  font-size: 14px;
+  text-align: center;
+  padding: 20px;
+}
+#overtube-edge-popup .ot-disabled-overlay svg {
+  width: 48px;
+  height: 48px;
+  color: var(--ot-text-secondary);
+  margin-bottom: 12px;
+}

@@ -30,7 +30,8 @@
         "content/styles/progress.css",
         "content/styles/focus.css",
         "content/styles/shorts.css",
-        "content/styles/miniplayer.css"
+        "content/styles/miniplayer.css",
+        "content/styles/edgePopup.css"
       ],
       "js": [
         "content/modules/progressBar.js",
@@ -39,9 +40,21 @@
         "content/modules/focusMode.js",
         "content/modules/hideShorts.js",
         "content/modules/miniPlayer.js",
+        "content/modules/edgePopup.js",
         "content/content.js"
       ],
       "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "over.webp",
+        "over.png"
+      ],
+      "matches": [
+        "https://www.youtube.com/*"
+      ]
     }
   ]
 }

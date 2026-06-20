@@ -5,6 +5,7 @@ const DEFAULT_SETTINGS = {
   progressBarStyle: 'default',
   playbackSpeed: 1.0,
   enableMiniPlayer: false,
+  showEdgePopup: true,
   audioBoost: 100,
   hideShorts: false,
   focusHideSidebar: false,
@@ -27,6 +28,7 @@ const progressCardHeader = document.getElementById('progress-card-header');
 const playbackSpeedInput = document.getElementById('playback-speed');
 const speedValLabel = document.getElementById('speed-val');
 const enableMiniPlayerInput = document.getElementById('enable-mini-player');
+const showEdgePopupInput = document.getElementById('show-edge-popup');
 const audioBoostInput = document.getElementById('audio-boost');
 const audioValLabel = document.getElementById('audio-val');
 const hideShortsInput = document.getElementById('hide-shorts');
@@ -137,6 +139,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Mini Player
     if (enableMiniPlayerInput) enableMiniPlayerInput.checked = settings.enableMiniPlayer;
 
+    // 5.5. Show Edge Popup
+    if (showEdgePopupInput) showEdgePopupInput.checked = settings.showEdgePopup;
+
     // 6. Audio Boost
     if (audioBoostInput) {
       audioBoostInput.value = settings.audioBoost;
@@ -210,6 +215,12 @@ if (playbackSpeedInput) {
 if (enableMiniPlayerInput) {
   enableMiniPlayerInput.addEventListener('change', (e) => {
     updateSetting('enableMiniPlayer', e.target.checked);
+  });
+}
+
+if (showEdgePopupInput) {
+  showEdgePopupInput.addEventListener('change', (e) => {
+    updateSetting('showEdgePopup', e.target.checked);
   });
 }
 
