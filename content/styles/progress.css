@@ -1,60 +1,56 @@
-/* Preset: Neon Cyan Glow */
-.ot-progress-neon .ytp-play-progress {
-  background: #00f0ff !important;
-  box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff !important;
+/* Preset: Going Merry */
+.ot-progress-merry .ytp-play-progress {
+  background: linear-gradient(90deg, #0077be, #00d2ff) !important; /* Blue to skyblue gradient */
 }
-.ot-progress-neon .ytp-scrubber-button {
-  background: #00f0ff !important;
-  box-shadow: 0 0 12px #00f0ff !important;
-  border: 1px solid #ffffff !important;
+.ot-progress-merry .ytp-scrubber-button {
+  background: url('chrome-extension://__MSG_@@extension_id__/public/gif/onepiece_goingmerry.gif') no-repeat center !important;
+  background-size: contain !important;
+  width: 44px !important;
+  height: 44px !important;
+  border: none !important;
+  margin-top: -33px !important; /* Position matched to -90% preview height offset */
+  margin-left: -22px !important;
+  transform: scaleX(-1) !important; /* Flip horizontally */
+  box-shadow: none !important;
 }
-
-/* Preset: Minimal */
-.ot-progress-minimal .ytp-progress-bar-container {
-  height: 2px !important;
-}
-.ot-progress-minimal .ytp-progress-bar {
-  height: 2px !important;
-}
-.ot-progress-minimal .ytp-scrubber-button {
-  width: 8px !important;
-  height: 8px !important;
-  margin-top: -3px !important;
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out !important;
-}
-.ot-progress-minimal .ytp-progress-bar-container:hover .ytp-scrubber-button {
-  opacity: 1 !important;
+.ot-progress-merry .ytp-scrubber-container {
+  z-index: 1000 !important;
 }
 
-/* Preset: Gradient */
-.ot-progress-gradient .ytp-play-progress {
-  background: linear-gradient(90deg, #7c4dff, #ff3366, #ff9933) !important;
+/* Preset: Batman */
+.ot-progress-batman .ytp-play-progress {
+  background: linear-gradient(90deg, #d35400, #f1c40f) !important; /* Dark orange yellow to yellow */
 }
-.ot-progress-gradient .ytp-scrubber-button {
-  background: #ff3366 !important;
-  border: 2px solid #ffffff !important;
+.ot-progress-batman .ytp-scrubber-button {
+  background: url('chrome-extension://__MSG_@@extension_id__/public/gif/batman.gif') no-repeat center !important;
+  background-size: contain !important;
+  width: 48px !important;
+  height: 48px !important;
+  border: none !important;
+  margin-top: -20px !important; /* Centered vertically for 48px height to match preview */
+  margin-left: -24px !important;
+  transform: none !important; /* Not flipped */
+  box-shadow: none !important;
 }
-
-/* Preset: Gaming */
-.ot-progress-gaming .ytp-play-progress {
-  background: linear-gradient(90deg, #ff007f, #7f00ff, #00f0ff, #ff007f) !important;
-  background-size: 400% 400% !important;
-  animation: ot-rgb-pulse 6s linear infinite !important;
-}
-.ot-progress-gaming .ytp-scrubber-button {
-  background: #7f00ff !important;
-  box-shadow: 0 0 10px #7f00ff !important;
-  animation: ot-rgb-glow 6s linear infinite !important;
+.ot-progress-batman .ytp-scrubber-container {
+  z-index: 1000 !important;
 }
 
-@keyframes ot-rgb-pulse {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* Preset: Spider-Man */
+.ot-progress-spiderman .ytp-play-progress {
+  background: linear-gradient(90deg, #5a0a0a, #e74c3c) !important; /* Reduced black, dark red to red */
 }
-
-@keyframes ot-rgb-glow {
-  0% { filter: hue-rotate(0deg); }
-  100% { filter: hue-rotate(360deg); }
+.ot-progress-spiderman .ytp-scrubber-button {
+  background: url('chrome-extension://__MSG_@@extension_id__/public/gif/spiderman.gif') no-repeat center !important;
+  background-size: contain !important;
+  width: 36px !important;
+  height: 36px !important;
+  border: none !important;
+  margin-top: -16px !important; /* Centered vertically for 36px height to match preview */
+  margin-left: -18px !important;
+  transform: none !important; /* Not flipped */
+  box-shadow: none !important;
+}
+.ot-progress-spiderman .ytp-scrubber-container {
+  z-index: 1000 !important;
 }

@@ -93,7 +93,7 @@ window.OverTubeEdgePopup = {
     // Create inner HTML
     container.innerHTML = `
       <!-- Collapsed Logo View -->
-      <img src="${logoUrl}" alt="OverTube" class="ot-collapsed-logo" style="display: ${pos.collapsed ? 'block' : 'none'};">
+      <img src="${logoUrl}" alt="OverTube" class="ot-collapsed-logo" draggable="false" style="display: ${pos.collapsed ? 'block' : 'none'};">
 
       <!-- Expanded Panel View -->
       <div class="ot-expanded-content" style="display: ${pos.collapsed ? 'none' : 'block'};">
@@ -130,41 +130,44 @@ window.OverTubeEdgePopup = {
 
           <!-- PLAYER TAB -->
           <div id="ot-tab-player" class="ot-tab-content active">
-            <!-- Custom Progress Bar -->
-            <div class="ot-card">
-              <div class="ot-card-title">
+            <!-- Custom Progress Bar (Collapsible) -->
+            <div class="ot-card ot-collapsible-card" id="ot-progress-bar-card">
+              <div class="ot-card-title ot-collapsible-header" id="ot-progress-card-header" style="cursor: pointer;">
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
                 </svg>
                 <span>Custom Progress Bar</span>
-              </div>
-              <p class="ot-card-desc">Personalize your YouTube progress bar with custom styling and gradients.</p>
-              
-              <!-- Live Preview -->
-              <div class="ot-preview-container">
-                <div class="ot-preview-bar-track" id="ot-preview-track">
-                  <div class="ot-preview-bar-fill" id="ot-preview-fill"></div>
-                  <div class="ot-preview-bar-scrubber" id="ot-preview-scrubber"></div>
-                </div>
+                <svg class="ot-chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
               </div>
 
-              <!-- Presets Grid -->
-              <div class="ot-presets-grid">
-                <button class="ot-preset-btn" data-style="default" title="Default Red">
-                  <div class="ot-preset-icon default-icon"></div>
-                </button>
-                <button class="ot-preset-btn" data-style="neon" title="Neon Cyan">
-                  <div class="ot-preset-icon neon-icon"></div>
-                </button>
-                <button class="ot-preset-btn" data-style="minimal" title="Minimalist">
-                  <div class="ot-preset-icon minimal-icon"></div>
-                </button>
-                <button class="ot-preset-btn" data-style="gradient" title="Sunset Gradient">
-                  <div class="ot-preset-icon gradient-icon"></div>
-                </button>
-                <button class="ot-preset-btn" data-style="gaming" title="Cyber Gaming">
-                  <div class="ot-preset-icon gaming-icon"></div>
-                </button>
+              <div class="ot-collapsible-body" id="ot-progress-card-body">
+                <p class="ot-card-desc">Personalize your YouTube progress bar with custom styling and gradients.</p>
+                
+                <!-- Live Preview -->
+                <div class="ot-preview-container">
+                  <div class="ot-preview-bar-track" id="ot-preview-track">
+                    <div class="ot-preview-bar-fill" id="ot-preview-fill"></div>
+                    <div class="ot-preview-bar-scrubber" id="ot-preview-scrubber"></div>
+                  </div>
+                </div>
+
+                <!-- Presets Grid -->
+                <div class="ot-presets-grid">
+                  <button class="ot-preset-btn" data-style="default" data-tooltip="Default Red">
+                    <div class="ot-preset-icon default-icon"></div>
+                  </button>
+                  <button class="ot-preset-btn" data-style="merry" data-tooltip="Going Merry">
+                    <div class="ot-preset-icon merry-icon"></div>
+                  </button>
+                  <button class="ot-preset-btn" data-style="batman" data-tooltip="Batman">
+                    <div class="ot-preset-icon batman-icon"></div>
+                  </button>
+                  <button class="ot-preset-btn" data-style="spiderman" data-tooltip="Spider-Man">
+                    <div class="ot-preset-icon spiderman-icon"></div>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -338,15 +341,18 @@ window.OverTubeEdgePopup = {
 
       if (e.target.closest('button') || e.target.closest('input') || e.target.closest('a')) return;
 
+      e.preventDefault(); // Prevent native browser dragging and text selection
+
       isDragging = true;
       dragMoved = false;
       dragStartX = e.clientX;
       dragStartY = e.clientY;
       
-      const rect = this.container.getBoundingClientRect();
-      dragStartTop = rect.top + rect.height / 2;
+      // Center the 40x44 logo area directly under the cursor
+      this.dragOffsetX = 20;
+      this.dragOffsetY = 22;
 
-      this.container.style.transition = 'top 0s';
+      this.container.style.transition = 'top 0s, left 0s';
 
       document.addEventListener('pointermove', performDrag);
       document.addEventListener('pointerup', endDrag);
@@ -358,23 +364,40 @@ window.OverTubeEdgePopup = {
       const dx = e.clientX - dragStartX;
       const dy = e.clientY - dragStartY;
 
-      if (Math.abs(dx) > 6 || Math.abs(dy) > 6) {
+      // Only activate drag styling and remove state classes once we move past the threshold
+      if (!dragMoved && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
         dragMoved = true;
+        this.container.classList.add('ot-dragging');
+        this.container.classList.remove('collapsed', 'expanded');
+
+        // Temporarily toggle visibility to show logo only during drag
+        const logoEl = this.container.querySelector('.ot-collapsed-logo');
+        const contentEl = this.container.querySelector('.ot-expanded-content');
+        if (logoEl && contentEl) {
+          logoEl.style.display = 'block';
+          contentEl.style.display = 'none';
+        }
       }
 
-      // Calculate vertical percent
-      const newTop = dragStartTop + dy;
-      let topPercent = (newTop / window.innerHeight) * 100;
-      topPercent = Math.max(5, Math.min(95, topPercent));
+      if (dragMoved) {
+        // Move container directly under the cursor
+        let x = e.clientX - this.dragOffsetX;
+        let y = e.clientY - this.dragOffsetY;
 
-      this.container.style.top = `${topPercent}%`;
+        // Constrain within viewport bounds
+        x = Math.max(0, Math.min(window.innerWidth - 40, x));
+        y = Math.max(0, Math.min(window.innerHeight - 44, y));
 
-      // Calculate horizontal switch edge
-      const screenCenterX = window.innerWidth / 2;
-      const currentEdge = e.clientX > screenCenterX ? 'right' : 'left';
-      if (!this.container.classList.contains(currentEdge)) {
-        this.container.classList.remove('left', 'right');
-        this.container.classList.add(currentEdge);
+        this.container.style.left = `${x}px`;
+        this.container.style.top = `${y}px`;
+
+        // Calculate horizontal switch edge
+        const screenCenterX = window.innerWidth / 2;
+        const currentEdge = e.clientX > screenCenterX ? 'right' : 'left';
+        if (!this.container.classList.contains(currentEdge)) {
+          this.container.classList.remove('left', 'right');
+          this.container.classList.add(currentEdge);
+        }
       }
     };
 
@@ -387,14 +410,23 @@ window.OverTubeEdgePopup = {
       document.removeEventListener('pointerup', endDrag);
       document.removeEventListener('pointercancel', endDrag);
 
-      // Save position to storage
-      const rect = this.container.getBoundingClientRect();
-      const topPercent = ((rect.top + rect.height / 2) / window.innerHeight) * 100;
-      const edge = this.container.classList.contains('right') ? 'right' : 'left';
-      const collapsed = this.container.classList.contains('collapsed');
+      if (dragMoved) {
+        // Save position to storage
+        const rect = this.container.getBoundingClientRect();
+        const topPercent = ((rect.top + rect.height / 2) / window.innerHeight) * 100;
+        const edge = this.container.classList.contains('right') ? 'right' : 'left';
+        const collapsed = this.settings.edgePopupPosition ? this.settings.edgePopupPosition.collapsed : true;
 
-      this.settings.edgePopupPosition = { edge, topPercent, collapsed };
-      chrome.storage.sync.set({ edgePopupPosition: this.settings.edgePopupPosition });
+        this.settings.edgePopupPosition = { edge, topPercent, collapsed };
+        this.saveSetting({ edgePopupPosition: this.settings.edgePopupPosition });
+      }
+
+      // Clear styles to let edge-docking class rules snap it back
+      this.container.style.left = '';
+      this.container.style.top = '';
+
+      this.container.classList.remove('ot-dragging');
+      this.updateUIState();
     };
 
     // Attach dragging pointerdown listener to container
@@ -447,7 +479,7 @@ window.OverTubeEdgePopup = {
       this.settings[key] = value;
       const syncObj = {};
       syncObj[key] = value;
-      chrome.storage.sync.set(syncObj);
+      this.saveSetting(syncObj);
       
       // Notify content script coordinator to immediately apply settings on current tab
       if (window.OverTubeProgressBar && key === 'progressBarStyle') {
@@ -524,6 +556,16 @@ window.OverTubeEdgePopup = {
       updateSettingLocal('focusHideEndscreen', e.target.checked);
     });
 
+    // Collapsible Card Click Event
+    const otProgressCard = this.container.querySelector('#ot-progress-bar-card');
+    const otProgressCardHeader = this.container.querySelector('#ot-progress-card-header');
+    if (otProgressCardHeader && otProgressCard) {
+      otProgressCardHeader.addEventListener('click', () => {
+        const collapsed = otProgressCard.classList.toggle('collapsed');
+        updateSettingLocal('progressBarCollapsed', collapsed);
+      });
+    }
+
     // Reset Button
     const resetBtn = this.container.querySelector('#ot-reset-settings');
     resetBtn.addEventListener('click', () => {
@@ -541,13 +583,31 @@ window.OverTubeEdgePopup = {
         focusHideHome: false,
         focusHideEndscreen: false
       };
-      chrome.storage.sync.set(DEFAULT_SETTINGS, () => {
-        this.settings = { ...this.settings, ...DEFAULT_SETTINGS };
-        this.updateUIState();
-        // Force reload page to apply cleanly
+      if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.id) {
+        try {
+          chrome.storage.sync.set(DEFAULT_SETTINGS, () => {
+            this.settings = { ...this.settings, ...DEFAULT_SETTINGS };
+            this.updateUIState();
+            // Force reload page to apply cleanly
+            window.location.reload();
+          });
+        } catch (e) {
+          window.location.reload();
+        }
+      } else {
         window.location.reload();
-      });
+      }
     });
+  },
+
+  saveSetting(syncObj) {
+    if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.id) {
+      try {
+        chrome.storage.sync.set(syncObj);
+      } catch (e) {
+        console.warn("OverTube extension context invalidated:", e);
+      }
+    }
   },
 
   toggleCollapsed(shouldCollapse) {
@@ -556,7 +616,7 @@ window.OverTubeEdgePopup = {
     const pos = this.settings.edgePopupPosition || { edge: 'right', topPercent: 50 };
     pos.collapsed = shouldCollapse;
     this.settings.edgePopupPosition = pos;
-    chrome.storage.sync.set({ edgePopupPosition: pos });
+    this.saveSetting({ edgePopupPosition: pos });
 
     this.updateUIState();
   },
@@ -621,6 +681,16 @@ window.OverTubeEdgePopup = {
       const overlay = this.container.querySelector('.ot-disabled-overlay');
       if (overlay) {
         overlay.style.display = this.settings.extensionEnabled ? 'none' : 'flex';
+      }
+
+      // Progress bar card collapsible state
+      const otProgressCardEl = this.container.querySelector('#ot-progress-bar-card');
+      if (otProgressCardEl) {
+        if (this.settings.progressBarCollapsed) {
+          otProgressCardEl.classList.add('collapsed');
+        } else {
+          otProgressCardEl.classList.remove('collapsed');
+        }
       }
 
       // Active Preset styling

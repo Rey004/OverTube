@@ -2,9 +2,9 @@
 
 /* Edge Popup Container */
 #overtube-edge-popup {
-  --ot-bg-dark: #0a0505;
-  --ot-bg-card: rgba(30, 18, 18, 0.95);
-  --ot-bg-card-hover: rgba(45, 24, 24, 0.98);
+  --ot-bg-dark: rgba(0, 0, 0, 0.93);
+  --ot-bg-card: rgba(15, 8, 8, 0.75);
+  --ot-bg-card-hover: rgba(25, 12, 12, 0.7);
   --ot-bg-input: #241414;
   --ot-text-primary: #f5f0f0;
   --ot-text-secondary: #c7b2b2;
@@ -44,20 +44,17 @@
 #overtube-edge-popup.collapsed {
   width: 40px;
   height: 44px;
-  background-color: rgba(10, 5, 5, 0.55);
-  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(254, 51, 40, 0.25);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  cursor: grab;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   transition: width 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), height 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-#overtube-edge-popup.collapsed:active {
-  cursor: grabbing;
 }
 
 #overtube-edge-popup.collapsed.left {
@@ -84,7 +81,7 @@
 
 #overtube-edge-popup.collapsed:hover {
   width: 48px;
-  background-color: rgba(20, 10, 10, 0.95);
+  background-color: rgba(0, 0, 0, 0.93);
   border-color: rgba(254, 51, 40, 0.6);
   box-shadow: 0 4px 16px rgba(254, 51, 40, 0.35);
 }
@@ -108,6 +105,8 @@
   width: 350px;
   max-height: 85vh;
   background-color: var(--ot-bg-dark);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--ot-border-color);
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
@@ -127,6 +126,36 @@
 #overtube-edge-popup.expanded.right {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+}
+
+/* Dragging state styling (only over.webp logo is visible, no background/border) */
+#overtube-edge-popup.ot-dragging,
+#overtube-edge-popup.collapsed.ot-dragging,
+#overtube-edge-popup.expanded.ot-dragging {
+  width: 40px !important;
+  height: 44px !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  cursor: grabbing !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  right: auto !important;
+}
+
+#overtube-edge-popup.ot-dragging .ot-collapsed-logo {
+  width: 28px !important;
+  height: 28px !important;
+  opacity: 1 !important;
+  display: block !important;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 6px var(--ot-accent-glow));
 }
 
 /* Scrollbar styling specifically for edge popup */
@@ -151,16 +180,13 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--ot-border-color);
-  background: rgba(18, 10, 10, 0.8);
+  background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 10;
-  cursor: grab;
-}
-
-#overtube-edge-popup .ot-header:active {
-  cursor: grabbing;
+  cursor: pointer;
 }
 
 #overtube-edge-popup .ot-brand {
@@ -176,7 +202,7 @@
 }
 
 #overtube-edge-popup .ot-brand-title {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--ot-text-primary);
   letter-spacing: 0.5px;
@@ -233,7 +259,7 @@
   border: none;
   color: var(--ot-text-secondary);
   font-family: var(--ot-font-sans);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 500;
   padding: 8px 0;
   cursor: pointer;
@@ -266,7 +292,7 @@
   background: var(--ot-bg-card);
   border: 1px solid var(--ot-border-color);
   border-radius: 12px;
-  padding: 12px;
+  padding: 14px;
   transition: var(--ot-transition-smooth);
 }
 
@@ -275,11 +301,57 @@
   border-color: rgba(254, 51, 40, 0.2);
 }
 
+/* Collapsible Content Layout */
+#overtube-edge-popup .ot-collapsible-body {
+  max-height: 220px;
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.2s ease;
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#overtube-edge-popup .ot-collapsible-card.collapsed .ot-collapsible-body {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#overtube-edge-popup .ot-collapsible-card.collapsed {
+  gap: 0 !important;
+}
+
+#overtube-edge-popup .ot-collapsible-header {
+  position: relative;
+}
+
+#overtube-edge-popup .ot-chevron-icon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+#overtube-edge-popup .ot-collapsible-card.collapsed .ot-chevron-icon {
+  transform: translateY(-50%) rotate(-90deg);
+}
+
+#overtube-edge-popup .ot-collapsible-card:not(.collapsed) .ot-collapsible-body {
+  overflow: visible !important;
+}
+
 #overtube-edge-popup .ot-card-title {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
+  font-size: 12.5px;
   font-weight: 600;
   margin-bottom: 6px;
   color: var(--ot-text-primary);
@@ -288,11 +360,11 @@
 #overtube-edge-popup .ot-card-title svg {
   width: 18px;
   height: 18px;
-  color: var(--ot-accent-neon);
+  color: #ffffff;
 }
 
 #overtube-edge-popup .ot-card-desc {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--ot-text-secondary);
   line-height: 1.4;
   margin-bottom: 8px;
@@ -311,13 +383,13 @@
 }
 
 #overtube-edge-popup .ot-setting-name {
-  font-size: 13px;
+  font-size: 11.5px;
   font-weight: 500;
   color: var(--ot-text-primary);
 }
 
 #overtube-edge-popup .ot-setting-hint {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--ot-text-secondary);
 }
 
@@ -384,13 +456,14 @@
 }
 
 #overtube-edge-popup .ot-slider-val {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--ot-accent-neon);
 }
 
 #overtube-edge-popup .ot-range-input {
   -webkit-appearance: none;
+  appearance: none;
   width: 100%;
   height: 6px;
   border-radius: 3px;
@@ -434,21 +507,75 @@
 /* Presets grid */
 #overtube-edge-popup .ot-presets-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 200px;
   gap: 6px;
   margin-top: 6px;
 }
 
 #overtube-edge-popup .ot-preset-btn {
+  aspect-ratio: 1;
   background: var(--ot-bg-input);
   border: 1px solid var(--ot-border-color);
   border-radius: 8px;
-  height: 28px;
+  padding: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: var(--ot-transition-smooth);
+  position: relative;
+}
+
+#overtube-edge-popup .ot-preset-btn::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  padding: 4px 8px;
+  font-size: 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 4px rgba(254, 51, 40, 0.2);
+  border: 1px solid rgba(254, 51, 40, 0.5);
+  font-family: var(--ot-font-sans);
+  background: #120707;
+  color: #ffffff;
+}
+
+#overtube-edge-popup .ot-preset-btn[data-style="default"]::after {
+  left: 0;
+  transform: translateY(-2px);
+}
+#overtube-edge-popup .ot-preset-btn[data-style="default"]:hover::after {
+  opacity: 1;
+  transform: translateY(-6px);
+}
+
+/* Center second and third button's tooltips */
+#overtube-edge-popup .ot-preset-btn[data-style="merry"]::after,
+#overtube-edge-popup .ot-preset-btn[data-style="batman"]::after {
+  left: 50%;
+  transform: translateX(-50%) translateY(-2px);
+}
+#overtube-edge-popup .ot-preset-btn[data-style="merry"]:hover::after,
+#overtube-edge-popup .ot-preset-btn[data-style="batman"]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-6px);
+}
+
+/* Align fourth button's tooltip to the right of the button */
+#overtube-edge-popup .ot-preset-btn[data-style="spiderman"]::after {
+  right: 0;
+  left: auto;
+  transform: translateY(-2px);
+}
+#overtube-edge-popup .ot-preset-btn[data-style="spiderman"]:hover::after {
+  opacity: 1;
+  transform: translateY(-6px);
 }
 
 #overtube-edge-popup .ot-preset-btn:hover {
@@ -461,30 +588,63 @@
 }
 
 #overtube-edge-popup .ot-preset-icon {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  transition: var(--ot-transition-smooth);
 }
 
-#overtube-edge-popup .ot-preset-icon.default-icon { background: #ff0000; }
-#overtube-edge-popup .ot-preset-icon.neon-icon { background: #00ffff; }
-#overtube-edge-popup .ot-preset-icon.minimal-icon { background: #ffffff; }
-#overtube-edge-popup .ot-preset-icon.gradient-icon { background: linear-gradient(135deg, #ff007f 0%, #ff7f00 100%); }
-#overtube-edge-popup .ot-preset-icon.gaming-icon { background: linear-gradient(135deg, #00ff00 0%, #0000ff 100%); }
+#overtube-edge-popup .ot-preset-btn:hover .ot-preset-icon {
+  transform: scale(1.05);
+}
+
+#overtube-edge-popup .ot-preset-btn:hover .ot-preset-icon.merry-icon {
+  transform: scaleX(-1) scale(1.05);
+}
+
+#overtube-edge-popup .ot-preset-icon.default-icon {
+  background: #ff0000;
+  border-radius: 50%;
+  transform: scale(0.6);
+}
+
+#overtube-edge-popup .ot-preset-btn:hover .ot-preset-icon.default-icon {
+  transform: scale(0.65);
+}
+#overtube-edge-popup .ot-preset-icon.merry-icon {
+  background: url('chrome-extension://__MSG_@@extension_id__/public/gif/onepiece_goingmerry.gif') no-repeat center / contain, linear-gradient(135deg, #0077be, #00d2ff);
+  border-radius: 4px;
+  transform: scaleX(-1);
+}
+#overtube-edge-popup .ot-preset-icon.batman-icon {
+  background: url('chrome-extension://__MSG_@@extension_id__/public/gif/batman.gif') no-repeat center / contain, linear-gradient(135deg, #d35400, #f1c40f);
+  border-radius: 4px;
+}
+#overtube-edge-popup .ot-preset-icon.spiderman-icon {
+  background: url('chrome-extension://__MSG_@@extension_id__/public/gif/spiderman.gif') no-repeat center / contain, linear-gradient(135deg, #5a0a0a, #e74c3c);
+  border-radius: 4px;
+}
 
 /* Live Preview inside Edge Popup */
 #overtube-edge-popup .ot-preview-container {
   background: rgba(0, 0, 0, 0.4);
-  padding: 10px;
+  padding: 18px 16px;
   border-radius: 8px;
-  margin-bottom: 10px;
+  border: 1px solid var(--ot-border-color);
+  margin: 6px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
 }
 
 #overtube-edge-popup .ot-preview-bar-track {
   position: relative;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 2px;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1.5px;
+  transition: var(--ot-transition-smooth);
 }
 
 #overtube-edge-popup .ot-preview-bar-fill {
@@ -492,52 +652,61 @@
   top: 0;
   left: 0;
   height: 100%;
-  width: 40%;
+  width: 55%;
+  border-radius: 1.5px 0 0 1.5px;
   background: var(--ot-accent-color);
-  border-radius: 2px;
+  transition: var(--ot-transition-smooth);
 }
 
 #overtube-edge-popup .ot-preview-bar-scrubber {
   position: absolute;
   top: 50%;
-  left: 40%;
+  left: 55%;
   transform: translate(-50%, -50%);
-  width: 12px;
-  height: 12px;
-  background: var(--ot-accent-color);
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
+  background: var(--ot-accent-color);
+  transition: var(--ot-transition-smooth);
 }
 
-#overtube-edge-popup .ot-preview-neon .ot-preview-bar-fill {
-  background: #00ffff;
+#overtube-edge-popup .ot-preview-merry .ot-preview-bar-fill {
+  background: linear-gradient(90deg, #0077be, #00d2ff) !important;
 }
-#overtube-edge-popup .ot-preview-neon .ot-preview-bar-scrubber {
-  background: #00ffff;
-}
-
-#overtube-edge-popup .ot-preview-minimal .ot-preview-bar-fill {
-  background: #ffffff;
-}
-#overtube-edge-popup .ot-preview-minimal .ot-preview-bar-scrubber {
-  background: #ffffff;
-  width: 6px;
-  height: 6px;
+#overtube-edge-popup .ot-preview-merry .ot-preview-bar-scrubber {
+  background: url('chrome-extension://__MSG_@@extension_id__/public/gif/onepiece_goingmerry.gif') no-repeat center !important;
+  background-size: contain !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 0 !important;
+  border: none !important;
+  transform: translate(-50%, -90%) scaleX(-1) !important;
 }
 
-#overtube-edge-popup .ot-preview-gradient .ot-preview-bar-fill {
-  background: linear-gradient(to right, #ff007f, #ff7f00);
+#overtube-edge-popup .ot-preview-batman .ot-preview-bar-fill {
+  background: linear-gradient(90deg, #d35400, #f1c40f) !important;
 }
-#overtube-edge-popup .ot-preview-gradient .ot-preview-bar-scrubber {
-  background: #ff7f00;
+#overtube-edge-popup .ot-preview-batman .ot-preview-bar-scrubber {
+  background: url('chrome-extension://__MSG_@@extension_id__/public/gif/batman.gif') no-repeat center !important;
+  background-size: contain !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 0 !important;
+  border: none !important;
+  transform: translate(-50%, -50%) !important;
 }
 
-#overtube-edge-popup .ot-preview-gaming .ot-preview-bar-fill {
-  background: linear-gradient(to right, #00ff00, #0000ff);
+#overtube-edge-popup .ot-preview-spiderman .ot-preview-bar-fill {
+  background: linear-gradient(90deg, #5a0a0a, #e74c3c) !important;
 }
-#overtube-edge-popup .ot-preview-gaming .ot-preview-bar-scrubber {
-  background: #0000ff;
-  border-radius: 0;
-  transform: translate(-50%, -50%) rotate(45deg);
+#overtube-edge-popup .ot-preview-spiderman .ot-preview-bar-scrubber {
+  background: url('chrome-extension://__MSG_@@extension_id__/public/gif/spiderman.gif') no-repeat center !important;
+  background-size: contain !important;
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 0 !important;
+  border: none !important;
+  transform: translate(-50%, -50%) !important;
 }
 
 /* Footer reset button */
@@ -547,8 +716,8 @@
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid var(--ot-border-color);
-  background: rgba(10, 5, 5, 0.9);
-  font-size: 11px;
+  background: rgba(0, 0, 0, 0.6);
+  font-size: 10px;
   color: var(--ot-text-secondary);
 }
 
@@ -577,8 +746,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(10, 5, 5, 0.85);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   flex-direction: column;
   justify-content: center;

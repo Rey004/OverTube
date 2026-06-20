@@ -5,7 +5,7 @@ window.OverTubeProgressBar = {
     if (!player) return;
 
     // Remove existing styles
-    player.classList.remove('ot-progress-neon', 'ot-progress-minimal', 'ot-progress-gradient', 'ot-progress-gaming');
+    player.classList.remove('ot-progress-merry', 'ot-progress-batman', 'ot-progress-spiderman');
 
     if (style !== 'default') {
       player.classList.add(`ot-progress-${style}`);

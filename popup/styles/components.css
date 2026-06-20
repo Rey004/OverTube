@@ -138,49 +138,50 @@
   transition: var(--transition-smooth);
 }
 
-/* Custom Preview Scrubber Styles matching the Presets */
-.preview-bar-track.preview-neon .preview-bar-fill {
-  background: #00f0ff !important;
+.preview-bar-track.preview-merry .preview-bar-fill {
+  background: linear-gradient(90deg, #0077be, #00d2ff) !important;
 }
-.preview-bar-track.preview-neon .preview-bar-scrubber {
-  background: #00f0ff !important;
-  border: 1px solid #ffffff !important;
-}
-
-.preview-bar-track.preview-minimal {
-  height: 2px !important;
-}
-.preview-bar-track.preview-minimal .preview-bar-fill {
-  background: #ffffff !important;
-}
-.preview-bar-track.preview-minimal .preview-bar-scrubber {
-  width: 8px !important;
-  height: 8px !important;
-  background: #ffffff !important;
+.preview-bar-track.preview-merry .preview-bar-scrubber {
+  background: url('../../public/gif/onepiece_goingmerry.gif') no-repeat center !important;
+  background-size: contain !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 0 !important;
+  border: none !important;
+  transform: translate(-50%, -90%) scaleX(-1) !important;
 }
 
-.preview-bar-track.preview-gradient .preview-bar-fill {
-  background: linear-gradient(90deg, #7c4dff, #ff3366, #ff9933) !important;
+.preview-bar-track.preview-batman .preview-bar-fill {
+  background: linear-gradient(90deg, #d35400, #f1c40f) !important;
 }
-.preview-bar-track.preview-gradient .preview-bar-scrubber {
-  background: #ff3366 !important;
-  border: 2px solid #ffffff !important;
+.preview-bar-track.preview-batman .preview-bar-scrubber {
+  background: url('../../public/gif/batman.gif') no-repeat center !important;
+  background-size: contain !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 0 !important;
+  border: none !important;
+  transform: translate(-50%, -50%) !important;
 }
 
-.preview-bar-track.preview-gaming .preview-bar-fill {
-  background: linear-gradient(90deg, #ff007f, #7f00ff, #00f0ff, #ff007f) !important;
-  background-size: 200% auto !important;
-  animation: ot-rgb-pulse 4s linear infinite !important;
+.preview-bar-track.preview-spiderman .preview-bar-fill {
+  background: linear-gradient(90deg, #5a0a0a, #e74c3c) !important;
 }
-.preview-bar-track.preview-gaming .preview-bar-scrubber {
-  background: #7f00ff !important;
-  animation: ot-rgb-glow 4s linear infinite !important;
+.preview-bar-track.preview-spiderman .preview-bar-scrubber {
+  background: url('../../public/gif/spiderman.gif') no-repeat center !important;
+  background-size: contain !important;
+  width: 26px !important;
+  height: 26px !important;
+  border-radius: 0 !important;
+  border: none !important;
+  transform: translate(-50%, -50%) !important;
 }
 
 /* Presets Grid */
 .presets-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 200px;
   gap: 8px;
   margin-top: 6px;
 }
@@ -196,6 +197,7 @@
   align-items: center;
   justify-content: center;
   transition: var(--transition-smooth);
+  position: relative;
 }
 
 .preset-btn:hover {
@@ -219,23 +221,86 @@
   transform: scale(1.05);
 }
 
+.preset-btn:hover .preset-icon.merry-icon {
+  transform: scaleX(-1) scale(1.05);
+}
+
 /* Preset Icons Inner styles */
 .default-icon {
   background: #fe3328;
+  border-radius: 50%;
+  transform: scale(0.6);
 }
-.neon-icon {
-  background: #00f0ff;
+.preset-btn:hover .preset-icon.default-icon {
+  transform: scale(0.65);
 }
-.minimal-icon {
-  background: #ffffff;
-  height: 4px !important;
-  border-radius: 2px;
+.merry-icon {
+  background: url('../../public/gif/onepiece_goingmerry.gif') no-repeat center / contain, linear-gradient(135deg, #0077be, #00d2ff);
+  transform: scaleX(-1);
 }
-.gradient-icon {
-  background: linear-gradient(135deg, #7c4dff, #ff3366, #ff9933);
+.batman-icon {
+  background: url('../../public/gif/batman.gif') no-repeat center / contain, linear-gradient(135deg, #d35400, #f1c40f);
 }
-.gaming-icon {
-  background: linear-gradient(135deg, #ff007f, #7f00ff, #00f0ff, #ff007f);
+.spiderman-icon {
+  background: url('../../public/gif/spiderman.gif') no-repeat center / contain, linear-gradient(135deg, #5a0a0a, #e74c3c);
+}
+
+/* CSS Tooltip for Presets */
+.preset-btn::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  padding: 4px 8px;
+  font-size: 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 4px rgba(233, 54, 45, 0.2);
+  border: 1px solid rgba(233, 54, 45, 0.4);
+  font-family: var(--font-sans);
+  background: #120707;
+  color: #ffffff;
+}
+
+/* Align first button's tooltip to the left of the button */
+.preset-btn[data-style="default"]::after {
+  left: 0;
+  transform: translateY(-2px);
+}
+.preset-btn[data-style="default"]:hover::after {
+  opacity: 1;
+  transform: translateY(-6px);
+}
+
+/* Center second and third button's tooltips */
+.preset-btn[data-style="merry"]::after,
+.preset-btn[data-style="batman"]::after {
+  left: 50%;
+  transform: translateX(-50%) translateY(-2px);
+}
+.preset-btn[data-style="merry"]:hover::after,
+.preset-btn[data-style="batman"]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-6px);
+}
+
+/* Align fourth button's tooltip to the right of the button */
+.preset-btn[data-style="spiderman"]::after {
+  right: 0;
+  left: auto;
+  transform: translateY(-2px);
+}
+.preset-btn[data-style="spiderman"]:hover::after {
+  opacity: 1;
+  transform: translateY(-6px);
+}
+
+/* Allow tooltip to render outside the card container when expanded */
+#progress-bar-card:not(.collapsed) {
+  overflow: visible !important;
 }
 
 /* Creative Highlighted Banner for Edge Popup Toggle */

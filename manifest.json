@@ -50,7 +50,10 @@
     {
       "resources": [
         "over.webp",
-        "over.png"
+        "over.png",
+        "public/gif/onepiece_goingmerry.gif",
+        "public/gif/batman.gif",
+        "public/gif/spiderman.gif"
       ],
       "matches": [
         "https://www.youtube.com/*"

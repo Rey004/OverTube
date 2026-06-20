@@ -39,7 +39,7 @@ window.OverTubeAudioBooster = {
       this.source.connect(this.gainNode);
       this.activeVideo = video;
     } catch (e) {
-      console.warn("OverTube Audio Booster initialization failed:", e);
+      // Silently catch DOMException when element is already connected (e.g. on extension reloads)
     }
   },
 
@@ -60,13 +60,13 @@ window.OverTubeAudioBooster = {
       if (this.audioCtx.state === 'suspended') {
         const resumeCtx = () => {
           if (this.audioCtx && this.audioCtx.state === 'suspended') {
-            this.audioCtx.resume();
+            this.audioCtx.resume().catch(e => {});
           }
         };
         video.addEventListener('play', resumeCtx, { once: true });
         video.addEventListener('playing', resumeCtx, { once: true });
         // Try resuming directly in case user already interacted
-        this.audioCtx.resume();
+        this.audioCtx.resume().catch(e => {});
       }
     }
   }
