@@ -11,13 +11,21 @@ const DEFAULT_SETTINGS = {
   focusHideSidebar: false,
   focusHideComments: false,
   focusHideHome: false,
-  focusHideEndscreen: false
+  focusHideEndscreen: false,
+  customCursorEnabled: true
 };
 
 let currentSettings = { ...DEFAULT_SETTINGS };
 
 // Apply all settings to the page
 function applyAllSettings() {
+  // Apply Custom Cursor state
+  if (currentSettings.extensionEnabled && currentSettings.customCursorEnabled) {
+    document.documentElement.classList.add('ot-custom-cursor');
+  } else {
+    document.documentElement.classList.remove('ot-custom-cursor');
+  }
+
   // If master toggle is disabled, revert all features back to normal/default
   if (currentSettings.extensionEnabled === false) {
     if (window.OverTubeProgressBar) {

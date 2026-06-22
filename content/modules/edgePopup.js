@@ -51,6 +51,7 @@ window.OverTubeEdgePopup = {
         focusHideComments: false,
         focusHideHome: false,
         focusHideEndscreen: false,
+        customCursorEnabled: true,
         edgePopupPosition: {
           edge: 'right',
           topPercent: 50,
@@ -154,25 +155,30 @@ window.OverTubeEdgePopup = {
                 </div>
 
                 <!-- Presets Grid -->
-                <div class="ot-presets-grid">
-                  <button class="ot-preset-btn" data-style="default" data-tooltip="Default Red">
-                    <div class="ot-preset-icon default-icon"></div>
-                  </button>
-                  <button class="ot-preset-btn" data-style="merry" data-tooltip="Going Merry">
-                    <div class="ot-preset-icon merry-icon"></div>
-                  </button>
-                  <button class="ot-preset-btn" data-style="batman" data-tooltip="Batman">
-                    <div class="ot-preset-icon batman-icon"></div>
-                  </button>
-                  <button class="ot-preset-btn" data-style="spiderman" data-tooltip="Spider-Man">
-                    <div class="ot-preset-icon spiderman-icon"></div>
-                  </button>
-                  <button class="ot-preset-btn" data-style="venom" data-tooltip="Venom">
-                    <div class="ot-preset-icon venom-icon"></div>
-                  </button>
-                  <button class="ot-preset-btn" data-style="captain" data-tooltip="Captain America">
-                    <div class="ot-preset-icon captain-icon"></div>
-                  </button>
+                <div class="ot-presets-grid-wrapper">
+                  <div class="ot-presets-grid">
+                    <button class="ot-preset-btn" data-style="default" data-tooltip="Default Red">
+                      <div class="ot-preset-icon default-icon"></div>
+                    </button>
+                    <button class="ot-preset-btn" data-style="merry" data-tooltip="Going Merry">
+                      <div class="ot-preset-icon merry-icon"></div>
+                    </button>
+                    <button class="ot-preset-btn" data-style="batman" data-tooltip="Batman">
+                      <div class="ot-preset-icon batman-icon"></div>
+                    </button>
+                    <button class="ot-preset-btn" data-style="spiderman" data-tooltip="Spider-Man">
+                      <div class="ot-preset-icon spiderman-icon"></div>
+                    </button>
+                    <button class="ot-preset-btn" data-style="venom" data-tooltip="Venom">
+                      <div class="ot-preset-icon venom-icon"></div>
+                    </button>
+                    <button class="ot-preset-btn" data-style="captain" data-tooltip="Captain America">
+                      <div class="ot-preset-icon captain-icon"></div>
+                    </button>
+                    <button class="ot-preset-btn" data-style="shinchan" data-tooltip="Shinchan">
+                      <div class="ot-preset-icon shinchan-icon"></div>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -211,6 +217,26 @@ window.OverTubeEdgePopup = {
                 </div>
                 <label class="ot-switch">
                   <input type="checkbox" id="ot-enable-mini-player">
+                  <span class="ot-slider-toggle"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Custom Neon Cursor -->
+            <div class="ot-card">
+              <div class="ot-card-title">
+                <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.303.197-1.591 1.591M21.75 12h-2.25m-.197 5.303-1.591-1.591M12 21.75V19.5m-5.303-.197 1.591-1.591M2.25 12h2.25m.197-5.303 1.591 1.591" />
+                </svg>
+                <span>Custom Neon Cursor</span>
+              </div>
+              <div class="ot-switch-control">
+                <div class="ot-setting-label">
+                  <span class="ot-setting-name">Enable Custom Cursor</span>
+                  <span class="ot-setting-hint">Stylized red neon cursor</span>
+                </div>
+                <label class="ot-switch">
+                  <input type="checkbox" id="ot-custom-cursor-toggle">
                   <span class="ot-slider-toggle"></span>
                 </label>
               </div>
@@ -500,6 +526,13 @@ window.OverTubeEdgePopup = {
         window.OverTubeMiniPlayer.apply(value);
       } else if (window.OverTubeFocusMode && key.startsWith('focus')) {
         window.OverTubeFocusMode.apply(this.settings);
+      } else if (key === 'customCursorEnabled') {
+        // Cursor is toggled via class on documentElement by content.js
+        if (value) {
+          document.documentElement.classList.add('ot-custom-cursor');
+        } else {
+          document.documentElement.classList.remove('ot-custom-cursor');
+        }
       }
     };
 
@@ -525,6 +558,12 @@ window.OverTubeEdgePopup = {
     const miniPlayerInput = this.container.querySelector('#ot-enable-mini-player');
     miniPlayerInput.addEventListener('change', (e) => {
       updateSettingLocal('enableMiniPlayer', e.target.checked);
+    });
+
+    // Custom Cursor Toggle
+    const customCursorInput = this.container.querySelector('#ot-custom-cursor-toggle');
+    customCursorInput.addEventListener('change', (e) => {
+      updateSettingLocal('customCursorEnabled', e.target.checked);
     });
 
     // Audio Boost Slider
@@ -587,7 +626,8 @@ window.OverTubeEdgePopup = {
         focusHideSidebar: false,
         focusHideComments: false,
         focusHideHome: false,
-        focusHideEndscreen: false
+        focusHideEndscreen: false,
+        customCursorEnabled: true
       };
       if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.id) {
         try {
@@ -604,6 +644,45 @@ window.OverTubeEdgePopup = {
         window.location.reload();
       }
     });
+
+    // Make Edge Preview Scrubber/Slider interactive (draggable/clickable)
+    const otPreviewTrack = this.container.querySelector('#ot-preview-track');
+    const otPreviewFill = this.container.querySelector('#ot-preview-fill');
+    const otPreviewScrubber = this.container.querySelector('#ot-preview-scrubber');
+
+    if (otPreviewTrack && otPreviewFill && otPreviewScrubber) {
+      let isDraggingPreview = false;
+
+      const updateOtPreviewValue = (clientX) => {
+        const rect = otPreviewTrack.getBoundingClientRect();
+        let percentage = ((clientX - rect.left) / rect.width) * 100;
+        percentage = Math.max(0, Math.min(100, percentage));
+
+        otPreviewFill.style.width = `${percentage}%`;
+        otPreviewScrubber.style.left = `${percentage}%`;
+      };
+
+      otPreviewTrack.addEventListener('pointerdown', (e) => {
+        isDraggingPreview = true;
+        updateOtPreviewValue(e.clientX);
+
+        const handleOtPointerMove = (moveEvent) => {
+          if (!isDraggingPreview) return;
+          updateOtPreviewValue(moveEvent.clientX);
+        };
+
+        const handleOtPointerUp = () => {
+          isDraggingPreview = false;
+          document.removeEventListener('pointermove', handleOtPointerMove);
+          document.removeEventListener('pointerup', handleOtPointerUp);
+        };
+
+        document.addEventListener('pointermove', handleOtPointerMove);
+        document.addEventListener('pointerup', handleOtPointerUp);
+        e.preventDefault();
+        e.stopPropagation();
+      });
+    }
   },
 
   saveSetting(syncObj) {
@@ -733,6 +812,12 @@ window.OverTubeEdgePopup = {
       const miniPlayerInput = this.container.querySelector('#ot-enable-mini-player');
       if (miniPlayerInput) {
         miniPlayerInput.checked = this.settings.enableMiniPlayer;
+      }
+
+      // Custom Cursor Switch
+      const customCursorInput = this.container.querySelector('#ot-custom-cursor-toggle');
+      if (customCursorInput) {
+        customCursorInput.checked = this.settings.customCursorEnabled;
       }
 
       // Volume Booster Slider & Display

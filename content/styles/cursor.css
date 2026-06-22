@@ -1,0 +1,66 @@
+/* OverTube Custom Cursors — Clean Aerodynamic Delta-Wing */
+
+/* Default Cursor — White aerodynamic delta wing with black border and subtle red glow */
+.ot-custom-cursor {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3,3 C3.5,3 11.5,6 19.5,9.5 C20.5,10 20.5,11 19.5,11.5 C16,13 14.5,14.5 13,19.5 C12.5,20.5 11.5,20.5 11,19.5 C9.5,14.5 5,7.5 3,3 Z' fill='none' stroke='%23ff443a' stroke-width='2.5' opacity='0.2' stroke-linejoin='round'/%3E%3Cpath d='M3,3 C3.5,3 11.5,6 19.5,9.5 C20.5,10 20.5,11 19.5,11.5 C16,13 14.5,14.5 13,19.5 C12.5,20.5 11.5,20.5 11,19.5 C9.5,14.5 5,7.5 3,3 Z' fill='%23ffffff' stroke='%23000000' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 3 3, auto !important;
+}
+
+/* Also apply default cursor to elements with explicit system/YouTube default cursors */
+.ot-custom-cursor [style*="cursor: default"],
+.ot-custom-cursor [style*="cursor:default"],
+.ot-custom-cursor ytd-app {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3,3 C3.5,3 11.5,6 19.5,9.5 C20.5,10 20.5,11 19.5,11.5 C16,13 14.5,14.5 13,19.5 C12.5,20.5 11.5,20.5 11,19.5 C9.5,14.5 5,7.5 3,3 Z' fill='none' stroke='%23ff443a' stroke-width='2.5' opacity='0.2' stroke-linejoin='round'/%3E%3Cpath d='M3,3 C3.5,3 11.5,6 19.5,9.5 C20.5,10 20.5,11 19.5,11.5 C16,13 14.5,14.5 13,19.5 C12.5,20.5 11.5,20.5 11,19.5 C9.5,14.5 5,7.5 3,3 Z' fill='%23ffffff' stroke='%23000000' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E") 3 3, auto !important;
+}
+
+/* Pointer Cursor — Classic pointing hand shape (white fill, black border, inner dividers, and red glow) */
+.ot-custom-cursor a,
+.ot-custom-cursor a *,
+.ot-custom-cursor button,
+.ot-custom-cursor button *,
+.ot-custom-cursor [role="button"],
+.ot-custom-cursor [role="button"] *,
+.ot-custom-cursor [role="link"],
+.ot-custom-cursor [role="link"] *,
+.ot-custom-cursor [role="tab"],
+.ot-custom-cursor [role="tab"] *,
+.ot-custom-cursor [role="slider"],
+.ot-custom-cursor [role="slider"] *,
+.ot-custom-cursor input[type="submit"],
+.ot-custom-cursor input[type="button"],
+.ot-custom-cursor input[type="checkbox"],
+.ot-custom-cursor input[type="radio"],
+.ot-custom-cursor input[type="range"],
+.ot-custom-cursor select,
+.ot-custom-cursor label,
+.ot-custom-cursor label *,
+.ot-custom-cursor ytd-thumbnail,
+.ot-custom-cursor ytd-thumbnail *,
+.ot-custom-cursor ytd-compact-video-renderer,
+.ot-custom-cursor ytd-compact-video-renderer *,
+.ot-custom-cursor ytd-grid-video-renderer,
+.ot-custom-cursor ytd-grid-video-renderer *,
+.ot-custom-cursor ytd-video-renderer,
+.ot-custom-cursor ytd-video-renderer *,
+.ot-custom-cursor tp-yt-paper-button,
+.ot-custom-cursor tp-yt-paper-button *,
+.ot-custom-cursor tp-yt-paper-tab,
+.ot-custom-cursor tp-yt-paper-tab *,
+.ot-custom-cursor tp-yt-paper-icon-button,
+.ot-custom-cursor tp-yt-paper-icon-button *,
+.ot-custom-cursor yt-interaction,
+.ot-custom-cursor .ytp-button,
+.ot-custom-cursor .ytp-button *,
+.ot-custom-cursor .ytp-scrubber-container,
+.ot-custom-cursor .ytp-scrubber-container *,
+.ot-custom-cursor .ytp-volume-slider-handle,
+.ot-custom-cursor [style*="cursor: pointer"],
+.ot-custom-cursor [style*="cursor:pointer"],
+.ot-custom-cursor [style*="cursor: pointer"] * {
+  cursor: pointer !important;
+}
+
+/* Exclude OverTube's own edge popup from custom cursor */
+#overtube-edge-popup,
+#overtube-edge-popup * {
+  cursor: auto !important;
+}

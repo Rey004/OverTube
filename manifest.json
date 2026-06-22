@@ -31,7 +31,8 @@
         "content/styles/focus.css",
         "content/styles/shorts.css",
         "content/styles/miniplayer.css",
-        "content/styles/edgePopup.css"
+        "content/styles/edgePopup.css",
+        "content/styles/cursor.css"
       ],
       "js": [
         "content/modules/progressBar.js",
@@ -55,7 +56,8 @@
         "public/gif/batman.gif",
         "public/gif/spiderman.gif",
         "public/gif/venom.gif",
-        "public/gif/captain_america.gif"
+        "public/gif/captain_america.gif",
+        "public/gif/shinchan.gif"
       ],
       "matches": [
         "https://www.youtube.com/*"

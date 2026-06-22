@@ -84,25 +84,30 @@
           <!-- Presets Grid -->
           <div class="settings-list">
             <span class="setting-hint">Preset Collection</span>
-            <div class="presets-grid">
-              <button class="preset-btn" data-style="default" data-tooltip="Default Red">
-                <div class="preset-icon default-icon"></div>
-              </button>
-              <button class="preset-btn" data-style="merry" data-tooltip="Going Merry">
-                <div class="preset-icon merry-icon"></div>
-              </button>
-              <button class="preset-btn" data-style="batman" data-tooltip="Batman">
-                <div class="preset-icon batman-icon"></div>
-              </button>
-              <button class="preset-btn" data-style="spiderman" data-tooltip="Spider-Man">
-                <div class="preset-icon spiderman-icon"></div>
-              </button>
-              <button class="preset-btn" data-style="venom" data-tooltip="Venom">
-                <div class="preset-icon venom-icon"></div>
-              </button>
-              <button class="preset-btn" data-style="captain" data-tooltip="Captain America">
-                <div class="preset-icon captain-icon"></div>
-              </button>
+            <div class="presets-grid-wrapper">
+              <div class="presets-grid">
+                <button class="preset-btn" data-style="default" data-tooltip="Default Red">
+                  <div class="preset-icon default-icon"></div>
+                </button>
+                <button class="preset-btn" data-style="merry" data-tooltip="Going Merry">
+                  <div class="preset-icon merry-icon"></div>
+                </button>
+                <button class="preset-btn" data-style="batman" data-tooltip="Batman">
+                  <div class="preset-icon batman-icon"></div>
+                </button>
+                <button class="preset-btn" data-style="spiderman" data-tooltip="Spider-Man">
+                  <div class="preset-icon spiderman-icon"></div>
+                </button>
+                <button class="preset-btn" data-style="venom" data-tooltip="Venom">
+                  <div class="preset-icon venom-icon"></div>
+                </button>
+                <button class="preset-btn" data-style="captain" data-tooltip="Captain America">
+                  <div class="preset-icon captain-icon"></div>
+                </button>
+                <button class="preset-btn" data-style="shinchan" data-tooltip="Shinchan">
+                  <div class="preset-icon shinchan-icon"></div>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -143,6 +148,26 @@
         </div>
         <label class="switch">
           <input type="checkbox" id="enable-mini-player">
+          <span class="slider-toggle"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Custom Neon Cursor Card -->
+    <div class="card">
+      <div class="card-title">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.303.197-1.591 1.591M21.75 12h-2.25m-.197 5.303-1.591-1.591M12 21.75V19.5m-5.303-.197 1.591-1.591M2.25 12h2.25m.197-5.303 1.591 1.591" />
+        </svg>
+        <span>Custom Neon Cursor</span>
+      </div>
+      <div class="switch-control">
+        <div class="setting-label">
+          <span class="setting-name">Enable Custom Cursor</span>
+          <span class="setting-hint">Stylized red neon cursor for YouTube</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="custom-cursor-toggle">
           <span class="slider-toggle"></span>
         </label>
       </div>

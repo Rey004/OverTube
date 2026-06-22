@@ -92,3 +92,22 @@
 .ot-progress-captain .ytp-scrubber-container {
   z-index: 1000 !important;
 }
+
+/* Preset: Shinchan */
+.ot-progress-shinchan .ytp-play-progress {
+  background: linear-gradient(90deg, #1e40af, #3b82f6) !important; /* Deep blue gradient */
+}
+.ot-progress-shinchan .ytp-scrubber-button {
+  background: url('chrome-extension://__MSG_@@extension_id__/public/gif/shinchan.gif') no-repeat center !important;
+  background-size: contain !important;
+  width: 50px !important;
+  height: 50px !important;
+  border: none !important;
+  margin-top: -35px !important; /* Slightly lower — Shinchan's legs touch the progress line */
+  margin-left: -18px !important;
+  transform: scaleX(-1) !important; /* Flip horizontally */
+  box-shadow: none !important;
+}
+.ot-progress-shinchan .ytp-scrubber-container {
+  z-index: 1000 !important;
+}

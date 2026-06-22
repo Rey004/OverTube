@@ -11,7 +11,8 @@ const DEFAULT_SETTINGS = {
   focusHideSidebar: false,
   focusHideComments: false,
   focusHideHome: false,
-  focusHideEndscreen: false
+  focusHideEndscreen: false,
+  customCursorEnabled: true
 };
 
 // UI Element References
@@ -28,6 +29,7 @@ const progressCardHeader = document.getElementById('progress-card-header');
 const playbackSpeedInput = document.getElementById('playback-speed');
 const speedValLabel = document.getElementById('speed-val');
 const enableMiniPlayerInput = document.getElementById('enable-mini-player');
+const customCursorInput = document.getElementById('custom-cursor-toggle');
 const showEdgePopupInput = document.getElementById('show-edge-popup');
 const audioBoostInput = document.getElementById('audio-boost');
 const audioValLabel = document.getElementById('audio-val');
@@ -139,6 +141,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Mini Player
     if (enableMiniPlayerInput) enableMiniPlayerInput.checked = settings.enableMiniPlayer;
 
+    // 5.2. Custom Cursor
+    if (customCursorInput) customCursorInput.checked = settings.customCursorEnabled;
+
     // 5.5. Show Edge Popup
     if (showEdgePopupInput) showEdgePopupInput.checked = settings.showEdgePopup;
 
@@ -224,6 +229,12 @@ if (showEdgePopupInput) {
   });
 }
 
+if (customCursorInput) {
+  customCursorInput.addEventListener('change', (e) => {
+    updateSetting('customCursorEnabled', e.target.checked);
+  });
+}
+
 if (audioBoostInput) {
   audioBoostInput.addEventListener('input', (e) => {
     const boost = parseInt(e.target.value);
@@ -279,3 +290,48 @@ if (resetSettingsBtn) {
     });
   });
 }
+
+// Make Preset Scrubber/Slider interactive (draggable/clickable)
+function initPreviewSliderInteractions() {
+  const previewTrack = document.getElementById('preview-track');
+  const previewFill = document.getElementById('preview-fill');
+  const previewScrubber = document.getElementById('preview-scrubber');
+
+  if (!previewTrack || !previewFill || !previewScrubber) return;
+
+  let isDragging = false;
+
+  const updatePreviewValue = (clientX) => {
+    const rect = previewTrack.getBoundingClientRect();
+    let percentage = ((clientX - rect.left) / rect.width) * 100;
+    percentage = Math.max(0, Math.min(100, percentage));
+
+    previewFill.style.width = `${percentage}%`;
+    previewScrubber.style.left = `${percentage}%`;
+  };
+
+  const handlePointerDown = (e) => {
+    isDragging = true;
+    updatePreviewValue(e.clientX);
+    document.addEventListener('pointermove', handlePointerMove);
+    document.addEventListener('pointerup', handlePointerUp);
+    e.preventDefault();
+  };
+
+  const handlePointerMove = (e) => {
+    if (!isDragging) return;
+    updatePreviewValue(e.clientX);
+  };
+
+  const handlePointerUp = () => {
+    isDragging = false;
+    document.removeEventListener('pointermove', handlePointerMove);
+    document.removeEventListener('pointerup', handlePointerUp);
+  };
+
+  previewTrack.addEventListener('pointerdown', handlePointerDown);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initPreviewSliderInteractions();
+});

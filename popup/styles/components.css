@@ -203,13 +203,46 @@
   transform: translate(-50%, -50%) !important;
 }
 
-/* Presets Grid */
+.preview-bar-track.preview-shinchan .preview-bar-fill {
+  background: linear-gradient(90deg, #1e40af, #3b82f6) !important;
+}
+.preview-bar-track.preview-shinchan .preview-bar-scrubber {
+  background: url('../../public/gif/shinchan.gif') no-repeat center !important;
+  background-size: contain !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 0 !important;
+  border: none !important;
+  transform: translate(-50%, -80%) scaleX(-1) !important; /* Flipped horizontally, legs touch line */
+}
+
+/* Presets Grid — scrollable, 6 per row */
+.presets-grid-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-top: 24px;
+  margin-top: -16px;
+  padding-bottom: 4px;
+  /* subtle scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(254, 51, 40, 0.3) transparent;
+}
+.presets-grid-wrapper::-webkit-scrollbar {
+  height: 3px;
+}
+.presets-grid-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+.presets-grid-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(254, 51, 40, 0.3);
+  border-radius: 2px;
+}
 .presets-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  max-width: 280px;
+  grid-template-columns: repeat(7, 44px);
   gap: 8px;
   margin-top: 6px;
+  width: max-content;
 }
 
 .preset-btn {
@@ -255,6 +288,10 @@
   transform: scaleX(-1) scale(1.05);
 }
 
+.preset-btn:hover .preset-icon.shinchan-icon {
+  transform: scaleX(-1) scale(1.05);
+}
+
 /* Preset Icons Inner styles */
 .default-icon {
   background: #fe3328;
@@ -280,6 +317,10 @@
 }
 .captain-icon {
   background: url('../../public/gif/captain_america.gif') no-repeat center / contain, linear-gradient(180deg, #002d62 0%, #002d62 33%, #ffffff 33%, #ffffff 66%, #d52b1e 66%, #d52b1e 100%);
+}
+.shinchan-icon {
+  background: url('../../public/gif/shinchan.gif') no-repeat center / contain, linear-gradient(135deg, #1e40af, #3b82f6);
+  transform: scaleX(-1);
 }
 
 /* CSS Tooltip for Presets */
@@ -328,13 +369,23 @@
   transform: translateX(-50%) translateY(-6px);
 }
 
-/* Align sixth button's tooltip to the right of the button */
+/* Align sixth button's tooltip centered */
 .preset-btn[data-style="captain"]::after {
+  left: 50%;
+  transform: translateX(-50%) translateY(-2px);
+}
+.preset-btn[data-style="captain"]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-6px);
+}
+
+/* Align seventh (last) button's tooltip to the right */
+.preset-btn[data-style="shinchan"]::after {
   right: 0;
   left: auto;
   transform: translateY(-2px);
 }
-.preset-btn[data-style="captain"]:hover::after {
+.preset-btn[data-style="shinchan"]:hover::after {
   opacity: 1;
   transform: translateY(-6px);
 }
