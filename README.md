@@ -13,6 +13,7 @@
 | **Audio Booster** | Safe Web Audio API amplification ranging from 0% to 500% with built-in clipping limiters. |
 | **Focus Mode** | Clean, modular toggles to hide comments, sidebar feeds, home page shelves, and end screens. |
 | **Hide Shorts** | Removes Shorts guides, shelves, and search cards completely across the platform. |
+| **Remove Sponsored Ads** | Hides sponsored feed items, search ads, and promotion slots across the platform. |
 | **Sticky Mini Player** | Smoothly floats the active video into an interactive overlay upon scrolling down. Movable by clicking and dragging from the center, and resizable from all 4 corners while maintaining a strict 16:9 aspect ratio. |
 | **On-Screen Sidebar** | A sleek, minimal side-docked circular pill containing the complete controls dashboard on-screen. Fully draggable along screen edges, supports left/right edge swapping, and opens on click with instant tab/indicator transitions. |
 

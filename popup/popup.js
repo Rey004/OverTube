@@ -13,7 +13,8 @@ const DEFAULT_SETTINGS = {
   focusHideHome: false,
   focusHideEndscreen: false,
   customCursorEnabled: true,
-  channelPopupEnabled: true
+  channelPopupEnabled: true,
+  removeAds: false
 };
 
 // UI Element References
@@ -36,6 +37,7 @@ const showEdgePopupInput = document.getElementById('show-edge-popup');
 const audioBoostInput = document.getElementById('audio-boost');
 const audioValLabel = document.getElementById('audio-val');
 const hideShortsInput = document.getElementById('hide-shorts');
+const removeAdsInput = document.getElementById('remove-ads-toggle');
 
 const focusHideSidebarInput = document.getElementById('focus-hide-sidebar');
 const focusHideCommentsInput = document.getElementById('focus-hide-comments');
@@ -162,6 +164,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 7. Hide Shorts
     if (hideShortsInput) hideShortsInput.checked = settings.hideShorts;
 
+    // 7.1. Remove Ads
+    if (removeAdsInput) removeAdsInput.checked = settings.removeAds;
+
     // 8. Focus Mode toggles
     if (focusHideSidebarInput) focusHideSidebarInput.checked = settings.focusHideSidebar;
     if (focusHideCommentsInput) focusHideCommentsInput.checked = settings.focusHideComments;
@@ -258,6 +263,12 @@ if (audioBoostInput) {
 if (hideShortsInput) {
   hideShortsInput.addEventListener('change', (e) => {
     updateSetting('hideShorts', e.target.checked);
+  });
+}
+
+if (removeAdsInput) {
+  removeAdsInput.addEventListener('change', (e) => {
+    updateSetting('removeAds', e.target.checked);
   });
 }
 

@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "OverTube - Customise your YouTube",
+  "name": "OverTube - Upgrade your YouTube",
   "version": "1.0",
   "description": "Take YouTube Beyond Its Limits",
   "permissions": [
@@ -33,7 +33,8 @@
         "content/styles/miniplayer.css",
         "content/styles/edgePopup.css",
         "content/styles/cursor.css",
-        "content/styles/channelPopup.css"
+        "content/styles/channelPopup.css",
+        "content/styles/removeAds.css"
       ],
       "js": [
         "content/modules/progressBar.js",
@@ -44,6 +45,7 @@
         "content/modules/miniPlayer.js",
         "content/modules/edgePopup.js",
         "content/modules/channelPopup.js",
+        "content/modules/removeAds.js",
         "content/content.js"
       ],
       "run_at": "document_start"

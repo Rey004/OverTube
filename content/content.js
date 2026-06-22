@@ -13,7 +13,8 @@ const DEFAULT_SETTINGS = {
   focusHideHome: false,
   focusHideEndscreen: false,
   customCursorEnabled: true,
-  channelPopupEnabled: true
+  channelPopupEnabled: true,
+  removeAds: false
 };
 
 let currentSettings = { ...DEFAULT_SETTINGS };
@@ -48,6 +49,9 @@ function applyAllSettings() {
     }
     if (window.OverTubeHideShorts) {
       window.OverTubeHideShorts.apply(false);
+    }
+    if (window.OverTubeRemoveAds) {
+      window.OverTubeRemoveAds.apply(false);
     }
     if (window.OverTubeMiniPlayer) {
       window.OverTubeMiniPlayer.apply(false);
@@ -84,6 +88,11 @@ function applyAllSettings() {
   // 5. Hide Shorts
   if (window.OverTubeHideShorts) {
     window.OverTubeHideShorts.apply(currentSettings.hideShorts);
+  }
+
+  // 5.1. Remove Ads
+  if (window.OverTubeRemoveAds) {
+    window.OverTubeRemoveAds.apply(currentSettings.removeAds);
   }
 
   // 6. Mini Player

@@ -53,6 +53,7 @@ window.OverTubeEdgePopup = {
         focusHideEndscreen: false,
         customCursorEnabled: true,
         channelPopupEnabled: true,
+        removeAds: false,
         edgePopupPosition: {
           edge: 'right',
           topPercent: 50,
@@ -223,18 +224,18 @@ window.OverTubeEdgePopup = {
               </div>
             </div>
 
-            <!-- Custom Neon Cursor -->
+            <!-- Custom Cursor -->
             <div class="ot-card">
               <div class="ot-card-title">
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.303.197-1.591 1.591M21.75 12h-2.25m-.197 5.303-1.591-1.591M12 21.75V19.5m-5.303-.197 1.591-1.591M2.25 12h2.25m.197-5.303 1.591 1.591" />
                 </svg>
-                <span>Custom Neon Cursor</span>
+                <span>Custom Cursor</span>
               </div>
               <div class="ot-switch-control">
                 <div class="ot-setting-label">
                   <span class="ot-setting-name">Enable Custom Cursor</span>
-                  <span class="ot-setting-hint">Stylized red neon cursor</span>
+                  <span class="ot-setting-hint">Stylized cursor</span>
                 </div>
                 <label class="ot-switch">
                   <input type="checkbox" id="ot-custom-cursor-toggle">
@@ -285,6 +286,26 @@ window.OverTubeEdgePopup = {
 
           <!-- FOCUS TAB -->
           <div id="ot-tab-focus" class="ot-tab-content">
+            <!-- Remove Ads -->
+            <div class="ot-card">
+              <div class="ot-card-title">
+                <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                </svg>
+                <span>Remove Sponsored Ads</span>
+              </div>
+              <div class="ot-switch-control">
+                <div class="ot-setting-label">
+                  <span class="ot-setting-name">Remove Ads / Sponsored</span>
+                  <span class="ot-setting-hint">Hides sponsored video tiles</span>
+                </div>
+                <label class="ot-switch">
+                  <input type="checkbox" id="ot-remove-ads-toggle">
+                  <span class="ot-slider-toggle"></span>
+                </label>
+              </div>
+            </div>
+
             <!-- Hide Shorts -->
             <div class="ot-card">
               <div class="ot-card-title">
@@ -543,6 +564,8 @@ window.OverTubeEdgePopup = {
         window.OverTubeAudioBooster.apply(value);
       } else if (window.OverTubeHideShorts && key === 'hideShorts') {
         window.OverTubeHideShorts.apply(value);
+      } else if (window.OverTubeRemoveAds && key === 'removeAds') {
+        window.OverTubeRemoveAds.apply(value);
       } else if (window.OverTubeMiniPlayer && key === 'enableMiniPlayer') {
         window.OverTubeMiniPlayer.apply(value);
       } else if (window.OverTubeFocusMode && key.startsWith('focus')) {
@@ -601,6 +624,14 @@ window.OverTubeEdgePopup = {
       this.updateUIState();
     });
 
+    // Remove Ads Toggle
+    const removeAdsInput = this.container.querySelector('#ot-remove-ads-toggle');
+    if (removeAdsInput) {
+      removeAdsInput.addEventListener('change', (e) => {
+        updateSettingLocal('removeAds', e.target.checked);
+      });
+    }
+
     // Hide Shorts Toggle
     const hideShortsInput = this.container.querySelector('#ot-hide-shorts');
     hideShortsInput.addEventListener('change', (e) => {
@@ -655,7 +686,8 @@ window.OverTubeEdgePopup = {
         focusHideHome: false,
         focusHideEndscreen: false,
         customCursorEnabled: true,
-        channelPopupEnabled: true
+        channelPopupEnabled: true,
+        removeAds: false
       };
       if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.id) {
         try {
@@ -863,6 +895,12 @@ window.OverTubeEdgePopup = {
       const audioVal = this.container.querySelector('#ot-audio-val');
       if (audioVal) {
         audioVal.textContent = this.settings.audioBoost + '%';
+      }
+
+      // Remove Ads Switch
+      const removeAdsInput = this.container.querySelector('#ot-remove-ads-toggle');
+      if (removeAdsInput) {
+        removeAdsInput.checked = this.settings.removeAds;
       }
 
       // Hide Shorts Switch
