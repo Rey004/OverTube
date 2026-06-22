@@ -52,6 +52,7 @@ window.OverTubeEdgePopup = {
         focusHideHome: false,
         focusHideEndscreen: false,
         customCursorEnabled: true,
+        channelPopupEnabled: true,
         edgePopupPosition: {
           edge: 'right',
           topPercent: 50,
@@ -237,6 +238,26 @@ window.OverTubeEdgePopup = {
                 </div>
                 <label class="ot-switch">
                   <input type="checkbox" id="ot-custom-cursor-toggle">
+                  <span class="ot-slider-toggle"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Channel Hover Popup -->
+            <div class="ot-card">
+              <div class="ot-card-title">
+                <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Z" />
+                </svg>
+                <span>Channel Hover Popup</span>
+              </div>
+              <div class="ot-switch-control">
+                <div class="ot-setting-label">
+                  <span class="ot-setting-name">Enable Channel Popup</span>
+                  <span class="ot-setting-hint">Show stats on channel hover</span>
+                </div>
+                <label class="ot-switch">
+                  <input type="checkbox" id="ot-channel-popup-toggle">
                   <span class="ot-slider-toggle"></span>
                 </label>
               </div>
@@ -566,6 +587,12 @@ window.OverTubeEdgePopup = {
       updateSettingLocal('customCursorEnabled', e.target.checked);
     });
 
+    // Channel Hover Popup Toggle
+    const channelPopupInput = this.container.querySelector('#ot-channel-popup-toggle');
+    channelPopupInput.addEventListener('change', (e) => {
+      updateSettingLocal('channelPopupEnabled', e.target.checked);
+    });
+
     // Audio Boost Slider
     const audioInput = this.container.querySelector('#ot-audio-boost');
     audioInput.addEventListener('input', (e) => {
@@ -627,7 +654,8 @@ window.OverTubeEdgePopup = {
         focusHideComments: false,
         focusHideHome: false,
         focusHideEndscreen: false,
-        customCursorEnabled: true
+        customCursorEnabled: true,
+        channelPopupEnabled: true
       };
       if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.id) {
         try {
@@ -818,6 +846,12 @@ window.OverTubeEdgePopup = {
       const customCursorInput = this.container.querySelector('#ot-custom-cursor-toggle');
       if (customCursorInput) {
         customCursorInput.checked = this.settings.customCursorEnabled;
+      }
+
+      // Channel Hover Popup Switch
+      const channelPopupInput = this.container.querySelector('#ot-channel-popup-toggle');
+      if (channelPopupInput) {
+        channelPopupInput.checked = this.settings.channelPopupEnabled;
       }
 
       // Volume Booster Slider & Display

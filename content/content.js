@@ -12,7 +12,8 @@ const DEFAULT_SETTINGS = {
   focusHideComments: false,
   focusHideHome: false,
   focusHideEndscreen: false,
-  customCursorEnabled: true
+  customCursorEnabled: true,
+  channelPopupEnabled: true
 };
 
 let currentSettings = { ...DEFAULT_SETTINGS };
@@ -51,6 +52,9 @@ function applyAllSettings() {
     if (window.OverTubeMiniPlayer) {
       window.OverTubeMiniPlayer.apply(false);
     }
+    if (window.OverTubeChannelPopup) {
+      window.OverTubeChannelPopup.apply(false);
+    }
     if (window.OverTubeEdgePopup) {
       window.OverTubeEdgePopup.apply({ ...currentSettings, extensionEnabled: false });
     }
@@ -87,7 +91,12 @@ function applyAllSettings() {
     window.OverTubeMiniPlayer.apply(currentSettings.enableMiniPlayer);
   }
 
-  // 7. Edge Popup
+  // 7. Channel Hover Popup
+  if (window.OverTubeChannelPopup) {
+    window.OverTubeChannelPopup.apply(currentSettings.channelPopupEnabled);
+  }
+
+  // 8. Edge Popup
   if (window.OverTubeEdgePopup) {
     window.OverTubeEdgePopup.apply(currentSettings);
   }
@@ -151,6 +160,9 @@ function init() {
     }
     if (window.OverTubeMiniPlayer) {
       window.OverTubeMiniPlayer.init();
+    }
+    if (window.OverTubeChannelPopup) {
+      window.OverTubeChannelPopup.init();
     }
     if (window.OverTubeEdgePopup) {
       window.OverTubeEdgePopup.init();

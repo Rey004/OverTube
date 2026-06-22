@@ -12,7 +12,8 @@ const DEFAULT_SETTINGS = {
   focusHideComments: false,
   focusHideHome: false,
   focusHideEndscreen: false,
-  customCursorEnabled: true
+  customCursorEnabled: true,
+  channelPopupEnabled: true
 };
 
 // UI Element References
@@ -30,6 +31,7 @@ const playbackSpeedInput = document.getElementById('playback-speed');
 const speedValLabel = document.getElementById('speed-val');
 const enableMiniPlayerInput = document.getElementById('enable-mini-player');
 const customCursorInput = document.getElementById('custom-cursor-toggle');
+const channelPopupInput = document.getElementById('channel-popup-toggle');
 const showEdgePopupInput = document.getElementById('show-edge-popup');
 const audioBoostInput = document.getElementById('audio-boost');
 const audioValLabel = document.getElementById('audio-val');
@@ -144,6 +146,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5.2. Custom Cursor
     if (customCursorInput) customCursorInput.checked = settings.customCursorEnabled;
 
+    // 5.3. Channel Hover Popup
+    if (channelPopupInput) channelPopupInput.checked = settings.channelPopupEnabled;
+
     // 5.5. Show Edge Popup
     if (showEdgePopupInput) showEdgePopupInput.checked = settings.showEdgePopup;
 
@@ -232,6 +237,12 @@ if (showEdgePopupInput) {
 if (customCursorInput) {
   customCursorInput.addEventListener('change', (e) => {
     updateSetting('customCursorEnabled', e.target.checked);
+  });
+}
+
+if (channelPopupInput) {
+  channelPopupInput.addEventListener('change', (e) => {
+    updateSetting('channelPopupEnabled', e.target.checked);
   });
 }
 

@@ -32,7 +32,8 @@
         "content/styles/shorts.css",
         "content/styles/miniplayer.css",
         "content/styles/edgePopup.css",
-        "content/styles/cursor.css"
+        "content/styles/cursor.css",
+        "content/styles/channelPopup.css"
       ],
       "js": [
         "content/modules/progressBar.js",
@@ -42,6 +43,7 @@
         "content/modules/hideShorts.js",
         "content/modules/miniPlayer.js",
         "content/modules/edgePopup.js",
+        "content/modules/channelPopup.js",
         "content/content.js"
       ],
       "run_at": "document_start"
